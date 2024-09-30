@@ -33,7 +33,7 @@ inline string blog_html_tail = R"xxxxx(
 		<div class="settings-options">
 			<a class="settings-button" href="../../index.html">home</a>
 			<a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
-			<a class="settings-button" href="../../_blog.html">back to blog</a>
+			<a class="settings-button" href="../../blog.html">back to blog</a>
 		</div>
 	</div>
 </main>

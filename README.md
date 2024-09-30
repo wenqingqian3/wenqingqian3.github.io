@@ -9,7 +9,7 @@
 |- user \- blog : 必须设置category, 里面存放markdown, 文件内部cate要与文件夹名对应
         |- _blog_history : 自动生成, 上一版本的 webroot/_blog/*
 |- webroot 网站根目录 \- index.html (主页) 手动修改
-                     |- _blog.html 自动生成
+                     |- blog.html 自动生成
                      |- assets : 存放资源 \- resume.pdf
                                          |- download.html -> ./download/
                                          |- redirect-page : redirect blog 存放在这(相对路径) 

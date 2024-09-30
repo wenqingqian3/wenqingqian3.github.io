@@ -1,7 +1,7 @@
 # 将BLOG_MD 解析到 BLOG_CPP 生成每个blog对应的cpp文件, 里面包含这个blog对应的结构体
 BLOG_MD="../user/blog/"
 BLOG_CPP="./src/_blog/"
-BLOG_WEB="../webroot/_blog/"
+BLOG_WEB="../webroot/blog/"
 rm -rf $BLOG_CPP/*
 
 # 生成CMAKE
@@ -137,13 +137,13 @@ echo "$new_content" >"$input_file"
 
 # blog归档
 if [ ! -d ../user/blog ]; then
-	mkdir ../webroot/_blog
+	mkdir ../webroot/blog
 fi
 if [ ! -d ../user/_blog_history ]; then
 	mkdir ../user/_blog_history
 fi
 
-cp -r ../webroot/_blog/* ../user/_blog_history/
+cp -r ../webroot/blog/* ../user/_blog_history/
 
 if [ ! -d build ]; then
 	mkdir build
