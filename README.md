@@ -10,10 +10,10 @@
         |- _blog_history : 自动生成, 上一版本的 webroot/_blog/*
 |- webroot 网站根目录 \- index.html (主页) 手动修改
                      |- _blog.html 自动生成
-					 |- assets : 存放资源 \- resume.pdf
-					                     |- download.html -> ./download/
-										 |- redirect-page : redirect blog 存放在这(相对路径) 
-										 		可以在kernel/src/generator_blog.cpp 50行改
+                     |- assets : 存放资源 \- resume.pdf
+                                         |- download.html -> ./download/
+                                         |- redirect-page : redirect blog 存放在这(相对路径) 
+                                             可以在kernel/src/generator_blog.cpp 50行改
 
 markdown转html支持格式
 1. #, ##, ### 三级标题
