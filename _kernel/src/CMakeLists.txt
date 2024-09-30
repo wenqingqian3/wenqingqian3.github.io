@@ -1,0 +1,6 @@
+add_subdirectory(./_blog/cate1)
+add_subdirectory(./_blog/cate2)
+file(GLOB file "*.cpp")
+add_executable(generator ${file})
+target_link_libraries(generator blog_cate1)
+target_link_libraries(generator blog_cate2)

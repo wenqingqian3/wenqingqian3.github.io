@@ -1,0 +1,30 @@
+:root {
+	--max-width-show: 700px
+
+}
+/* body.dark-mode {
+	--basic_white: #303030;
+	--basic_black: #fbeeba;
+	--basic_href: #bb86fc;
+}   */
+
+  .dark-mode .english-link {
+	color: #fbeeba;
+  }
+
+/* ebecfo - white */
+/* c2dcbf - green */
+
+body {
+	--basic_white: RGB(248,250,253);
+	--basic_black: #303030;
+	--basic_href: #0000ee;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		--basic_white: #303030;
+		--basic_black: RGB(248,250,253);
+		--basic_href: #bb86fc;
+	}
+}
