@@ -1,6 +1,6 @@
 # minimal-page
 
-[demo](https://github.com/wenqingqian3/wenqingqian3.github.io)
+[demo](https://wenqingqian3.github.io)
 
 ```txt
 文件结构
