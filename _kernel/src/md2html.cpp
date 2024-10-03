@@ -3,11 +3,47 @@
 #include <sstream>
 #include <regex>
 #include <string>
+#include <vector>
+#include <set>
 
 #include "config.h"
 #include "blog.h"
+#include "blog_html.h"
 
-std::string markdown_to_html(const std::string& markdown, string& blog_cate) {
+struct h2;struct h3;
+
+struct h1 {
+	std::string name_toc;
+	std::string name_real;
+	std::vector<h2> h2v; 
+};
+
+struct h2 {
+	std::string name_toc;
+	std::string name_real;
+	std::vector<h3> h3v;
+};
+
+struct h3 {
+	std::string name_toc;
+	std::string name_real;
+};
+
+
+
+std::string unique_toc_name(std::string name, auto&& sets){
+	// for
+	while(sets.count(name)){
+		name += "_O_o";
+	}
+
+	sets.emplace(name);
+	return name;
+}
+
+std::vector<std::string> markdown_to_html(const std::string& markdown, string& blog_cate) {
+	std::set<std::string> toc_name;
+	std::vector<h1> h1v;
 	std::stringstream html;
 	std::stringstream section;
 	std::istringstream iss(markdown);
@@ -83,12 +119,40 @@ std::string markdown_to_html(const std::string& markdown, string& blog_cate) {
 				section.clear();
 			}
 			section << "<section>" << std::endl;
-			section << "<h1>" << line.substr(2) << "</h1>" << std::endl;
+			auto h1name = unique_toc_name(line.substr(2), toc_name);
+			section << "<h1 id=\"" << h1name << "\">" << line.substr(2) << "</h1>" << std::endl;
 			inSection = true;
+
+			h1v.emplace_back(h1{.name_toc=h1name, .name_real=line.substr(2)});
+
 		} else if (std::regex_match(line, std::regex("^## .+"))) {
-			section << "<h2>" << line.substr(3) << "</h2>" << std::endl;
+			auto h2name = unique_toc_name(line.substr(3), toc_name);
+			section << "<h2 id=\"" << h2name << "\">" << line.substr(3) << "</h2>" << std::endl;
+
+			if(h1v.empty()){
+				std::cout << "[ERROR] must have h1 before h2\n";
+				exit(0);
+			}
+			h1v.back().h2v.emplace_back(h2{.name_toc=h2name, .name_real=line.substr(3)});
+
 		} else if (std::regex_match(line, std::regex("^### .+"))) {
-			section << "<p><u>" << line.substr(3) << "</u></p>" << std::endl;
+			auto h3name = unique_toc_name(line.substr(4), toc_name);
+			section << "<h3 id=\"" << h3name << "\">" << line.substr(4) << "</h3>" << std::endl;
+
+			if(h1v.empty()){
+				std::cout << "[ERROR] must have h1 before h3\n";
+				exit(0);
+			}			
+			if(h1v.back().h2v.empty()){
+				std::cout << "[ERROR] must have h2 before h3\n";
+				exit(0);
+			}
+			h1v.back().h2v.back().h3v.emplace_back(h3{.name_toc=h3name, .name_real=line.substr(4)});
+
+		} else if (std::regex_match(line, std::regex("^#### .+"))) {
+			// not support currently, treat as ###
+			std::cout << "[ERROR] not support h4 #### currently, treat as text and toc will not contain it\n";
+			section << "<p>" << line.substr(5) << "</p>" << std::endl;
 		// Process images
 		} else if (std::regex_match(line, std::regex("^!\\[(.+?)\\].*"))) {
 			std::string img_line = line;
@@ -243,15 +307,67 @@ std::string markdown_to_html(const std::string& markdown, string& blog_cate) {
 		html << section.str();
 	}
 
-	return html.str();
+	// return html.str();
+
+	// generator toc
+	std::stringstream toc;
+	if(!h1v.empty()){
+		toc << "<ul>";
+		for( auto& h1 : h1v ){
+			toc << "<li>";
+			toc << "<a class=\"toch1\" href=\"#" << h1.name_toc << "\">" << h1.name_real << "</a>";
+
+			if(!h1.h2v.empty()) toc << "<ul>";
+			for( auto& h2 : h1.h2v ){
+				toc << "<li>";
+				toc << "<a class=\"toch2\" href=\"#" << h2.name_toc << "\">" << h2.name_real << "</a>";
+
+				if(!h2.h3v.empty()) toc << "<ul>";
+				for( auto& h3 : h2.h3v ){
+					toc << "<li>";
+					toc << "<a class=\"toch3\" href=\"#" << h3.name_toc << "\">" << h3.name_real << "</a>";
+					toc << "</li>";
+				}
+				if(!h1.h2v.empty()) toc << "</ul>";
+
+				toc << "</li>";
+			}
+			if(!h1.h2v.empty()) toc << "</ul>";
+
+			toc << "</li>";
+		}
+		toc << "</ul>";
+	}
+
+	// generate toc js map
+	std::stringstream tocjsmap2;
+	tocjsmap2 << "const toch2map = {";
+	std::stringstream tocjsmap3;
+	tocjsmap3 << "const toch3map = {";
+
+	if(!h1v.empty()){
+		for( auto& h1 : h1v ){
+			for( auto& h2 : h1.h2v ){
+				tocjsmap2 << "\'" << h2.name_toc << "\' :{ h1: \'" << h1.name_toc << "\'},";
+				for( auto& h3 : h2.h3v ){
+					tocjsmap3 << "\'" << h3.name_toc << "\' :{ h1: \'" << h1.name_toc << "\', h2: \'" << h2.name_toc << "\'},";
+				}
+			}
+		}
+	}
+
+	tocjsmap2 << "}";
+	tocjsmap3 << "}\n" << tocjsmap2.str();
+
+	return {html.str(), toc.str(), tocjsmap3.str()};
 }
 
-std::string blog_markdown2html(std::string path, std::string cate){
+std::vector<std::string> blog_markdown2html(std::string path, std::string cate){
 	std::ifstream inputFile(path);
 	std::stringstream buffer;
 	buffer << inputFile.rdbuf();
 	std::string markdown = buffer.str();
-	std::string html = markdown_to_html(markdown, cate);
+	auto html = markdown_to_html(markdown, cate);
 
 	return html;
 }

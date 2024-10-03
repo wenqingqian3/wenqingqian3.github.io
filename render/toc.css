@@ -1,0 +1,89 @@
+body {
+	--basic-h1toc-color: #a81010;
+	--basic-h2toc-color: #ff4500;
+	--basic-h3toc-color: #ef7474;
+}
+
+
+.toc-container {
+	scrollbar-width: none;  
+}
+
+
+
+/* TOC Sidebar styling */
+.toc-container {
+	position: fixed;
+	top: 20px;
+	right: 50px;
+	width: 150px; /*this must be equal to root::--hidden-sidebar*/
+	max-height: 80vh; /* Prevent the sidebar from exceeding the viewport height */
+	overflow-y: auto; /* Scrollable if content overflows */
+	padding: 20px;
+	border-left: 1px solid #ddd;
+	/* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.toc-sidebar {
+	word-wrap: break-word; /* 自动换行 */
+}	
+
+
+main {
+	flex-grow: 1;
+}
+/* TOC列表样式 */
+.toc-sidebar ul {
+	list-style-type: none;
+	padding-left: 0;
+}
+
+.toc-sidebar ul ul{
+	list-style-type: none;
+	padding-left: 20px;
+}
+
+.toc-sidebar ul ul ul{
+	list-style-type: none;
+	padding-left: 30px;
+}
+
+.toc-sidebar ul li {
+	text-decoration: none;
+	list-style-type: none;
+	margin-bottom: 3px;
+}
+.toc-sidebar a.toch1.active {
+	font-weight: bold;
+	color: var(--basic-h1toc-color);
+}
+.toc-sidebar a.toch2.active {
+	font-weight: bold;
+	color: var(--basic-h2toc-color);
+}
+.toc-sidebar a.toch3.active {
+	font-weight: bold;
+	color: var(--basic-h3toc-color);
+}
+.toc-sidebar a {
+	text-decoration: none;
+	color: var(--basic_toc_black);
+	display: block; /* 保证文字过长时链接占据整行 */
+	word-wrap: break-word; /* 自动换行 */
+}
+
+.toc-sidebar a:hover {
+	color: var(--basic_href);
+	display: block; /* 保证文字过长时链接占据整行 */
+	word-wrap: break-word; /* 自动换行 */
+}
+.container {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	width: 90%;
+	max-width: var(--max-width-show);
+	margin: 0 auto;  /* 居中 */
+	padding: 20px 0;
+	min-height: 1000px;
+}

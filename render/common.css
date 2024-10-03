@@ -1,6 +1,6 @@
 :root {
-	--max-width-show: 700px
-
+	--max-width-show: 700px;
+	--hidden-sidebar: 150px;
 }
 /* body.dark-mode {
 	--basic_white: #303030;
@@ -18,7 +18,8 @@
 body {
 	--basic_white: RGB(248,250,253);
 	--basic_black: #303030;
-	--basic_href: #0000ee;
+	--basic_href: #a81010;
+	--basic_toc_black: #adafb1;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -26,5 +27,6 @@ body {
 		--basic_white: #303030;
 		--basic_black: RGB(248,250,253);
 		--basic_href: #bb86fc;
+		--basic_toc_black: #adafb1;
 	}
 }
