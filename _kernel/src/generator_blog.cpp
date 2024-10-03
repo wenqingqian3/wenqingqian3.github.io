@@ -2,6 +2,7 @@
 #include "config.h"
 #include <set>
 #include <filesystem>
+#include <sstream>
 
 namespace fs = std::filesystem;
 

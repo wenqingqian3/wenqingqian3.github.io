@@ -2,9 +2,8 @@
 
 struct blog blog_cate2_language = {
     target_file_name: "language",
-
     title: "language test",
-    date: "2024-4-5",
+    date: "2024-4-6",
     description: "english",
     category: "cate2",
     author: "",
