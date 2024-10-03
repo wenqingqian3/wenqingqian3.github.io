@@ -14,27 +14,27 @@ figcaption {
 }
 
 article, aside, footer, header, hgroup, nav, section, main {
-    display:block;
+	display:block;
 }
 
 pre {
-    overflow-x: auto;
+	overflow-x: auto;
 }
 body, header {
 	color: var(--basic_black);
 	background-color: var(--basic_white);
 }
 main, footer {
-    width: 90%;
-    max-width: var(--max-width-show);
-    margin-left: auto;
-    margin-right: auto;
+	width: 90%;
+	max-width: var(--max-width-show);
+	margin-left: auto;
+	margin-right: auto;
 	color: var(--basic_black);
 	background-color: var(--basic_white);
 }
 footer {
-    margin-top: 2em;
-    margin-bottom: 0.5em;
+	margin-top: 2em;
+	margin-bottom: 0.5em;
 }
 
 h1, h2, h3 {
@@ -45,77 +45,77 @@ h1, h2, h3 {
 
 h1 {
 	color: var(--basic-h1toc-color);
-    font-size: 2em;
+	font-size: 2em;
 }
 h2 {
 	color: var(--basic-h2toc-color);
-    font-size: 1.6em;
+	font-size: 1.6em;
 }
 h3 {
 	color: var(--basic-h3toc-color);
-    font-size: 1.3em;
+	font-size: 1.3em;
 }
 p {
 	color: var(--basic_black);
-    margin-top: 0.5em;
+	margin-top: 0.5em;
 }
 a {
 	color: var(--basic_href);
-    text-decoration: none;
+	text-decoration: none;
 }
 a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 div.display-eq {
-  text-align: center;
-  font-style: italic;
+	text-align: center;
+	font-style: italic;
 }
 div.display-eq span.text {
-  font-style: normal;
+	font-style: normal;
 }
 
 canvas.box {
-  border: solid 2px black;
-  border-radius: 3px;
+	border: solid 2px black;
+	border-radius: 3px;
 }
 pre code {
-  margin-left: 2em;
+	margin-left: 2em;
 }
 ul li {
-  margin: 7px 0;
+	margin: 7px 0;
 }
 @media only screen and (max-width: var(--max-width-show)) {
-    header {
-        font-size: 2em;
-    }
+	header {
+		font-size: 2em;
+	}
 }
 .katex {
-    font-size: 1.1em !important;
+	font-size: 1.1em !important;
 }
 
 .extras {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .unavailable, .extras a {
-    display: inline-block;
+	display: inline-block;
 
-    padding: 0.1em;
-    margin-top: 0.2em;
-    margin-bottom: 1em;
+	padding: 0.1em;
+	margin-top: 0.2em;
+	margin-bottom: 1em;
 
-    text-align: center;
+	text-align: center;
 
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    flex-basis: 10%;
-    flex-grow: 0;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	flex-basis: 10%;
+	flex-grow: 0;
 }
 .unavailable {
-    color: #888;
+	color: #888;
 }
 
 .github-icon {
@@ -123,27 +123,27 @@ ul li {
 	color: #333; /* 设置图标颜色 */
 	text-decoration: none; /* 移除链接下划线 */
 	margin: 0px; /* 设置外边距 */
-  }
+}
 .github-icon:hover {
 	color: #4078c0; /* 设置图标悬停颜色 */
 }
 @media only screen and (max-width: var(--max-width-show)) and (min-width: 400px) {
-    .unavailable, .extras a {
-        flex-basis: 20%;
-    }
-    .extras a.long {
-        flex-basis: 40%;
-    }
-    .extras {
-        flex-wrap: wrap;
-    }
+	.unavailable, .extras a {
+		flex-basis: 20%;
+	}
+	.extras a.long {
+		flex-basis: 40%;
+	}
+	.extras {
+		flex-wrap: wrap;
+	}
 }
 @media only screen and (max-width: 400px) {
-    .unavailable, .extras a {
-        flex-basis: 33%;
-    }
-    .extras {
-        flex-wrap: wrap;
-    }
+	.unavailable, .extras a {
+		flex-basis: 33%;
+	}
+	.extras {
+		flex-wrap: wrap;
+	}
 
 }
