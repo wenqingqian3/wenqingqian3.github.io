@@ -46,6 +46,15 @@ struct blog {
 			else
 				outfile << blog_html_chinese_head;
 
+			extern vector<string> blog_markdown2html(string, string);
+			auto vs = blog_markdown2html("../user/blog/" + category + "/" + target_file_name + ".md", category);
+
+			outfile << "<div class=\"container\"><aside class=\"toc-container\"><nav class=\"toc-sidebar\">";
+
+			outfile << vs[1];
+
+			outfile << "</nav></aside><main>";
+
 			// header
 			outfile << "<div class='disp-toc-header'>\n<h1>" + title + "</h1><h2 style=\"font-family: 'ZCOOL XiaoWei', regular;\">" + author + ' ' + date;
 			if(ps!=""&&ps!="none") outfile << " " << ps << "</h2>" << endl;
@@ -54,10 +63,13 @@ struct blog {
 			if(description!=""&&description!="none") outfile << "<p>" + description + "</p>";
 			outfile << "</div>";
 
-			extern string blog_markdown2html(string, string);
-			outfile << blog_markdown2html("../user/blog/" + category + "/" + target_file_name + ".md", category);
+			outfile << vs[0];
 
-			outfile << blog_html_tail;
+			outfile << blog_html_tail_1;
+
+			outfile << "<script>" << vs[2] << "\n</script>";
+
+			outfile << blog_html_tail_2;
 			outfile.close();
 		}
 	}

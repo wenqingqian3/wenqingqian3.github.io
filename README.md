@@ -21,6 +21,9 @@ markdown转html支持格式
 3. ![size1,size2...](link1,link2...)(description(可选)) 单行多图, size为单行宽度百分比
 4. $eq$ 行内公式, $$eq$$ 单行公式, `code` 行内代码
 
+error:
+1. category 不支持空格
+
 cd _kernel
 ./run.sh
 ```

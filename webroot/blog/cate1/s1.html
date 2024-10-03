@@ -16,28 +16,28 @@
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link href="../../../render/sidebar.css" rel="stylesheet">
+	<link href="../../../render/toc.css" rel="stylesheet">
 	<link href="../../../render/common.css" rel="stylesheet">
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<main>
-<div class='disp-toc-header'>
+<div class="container"><aside class="toc-container"><nav class="toc-sidebar"><ul><li><a class="toch1" href="#head1-1">head1-1</a><ul><li><a class="toch2" href="#head1-2">head1-2</a><ul><li><a class="toch3" href="#head1-3">head1-3</a></li></ul></li></ul></li><li><a class="toch1" href="#head2-1">head2-1</a><ul><li><a class="toch2" href="#head2-2">head2-2</a><ul><li><a class="toch3" href="#head2-3">head2-3</a></li></ul></li></ul></li><li><a class="toch1" href="#pic">pic</a></li><li><a class="toch1" href="#latex">latex</a></li><li><a class="toch1" href="#code">code</a></li><li><a class="toch1" href="#list">list</a></li></ul></nav></aside><main><div class='disp-toc-header'>
 <h1>basic test</h1><h2 style="font-family: 'ZCOOL XiaoWei', regular;"> 2024-4-5</h2>
 </div><section>
-<h1>head1-1</h1>
-<h2>head1-2</h2>
-<p><u> head1-3</u></p>
+<h1 id="head1-1">head1-1</h1>
+<h2 id="head1-2">head1-2</h2>
+<h3 id="head1-3">head1-3</h3>
 </section>
 <section>
-<h1>head2-1</h1>
+<h1 id="head2-1">head2-1</h1>
 <p>word</p>
-<h2>head2-2</h2>
+<h2 id="head2-2">head2-2</h2>
 <p>word</p>
-<p><u> head2-3</u></p>
+<h3 id="head2-3">head2-3</h3>
 <p>word</p>
 </section>
 <section>
-<h1>pic</h1>
+<h1 id="pic">pic</h1>
 <p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 5%;" alt="err! email me if you need"><p></p>
 <p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 20%;" alt="err! email me if you need"><p></p>
 <p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 50%;" alt="err! email me if you need"><p></p>
@@ -49,7 +49,7 @@
 <img src="../../../user/blog/cate1/./pic/end.png" style="width: 20%; margin-left: 9%;" alt="err! email me if you need">
 <p></p><figure><figcaption>description</figcaption></figure></section>
 <section>
-<h1>latex</h1>
+<h1 id="latex">latex</h1>
 <p>a + b = \(b+a\)</p>
 <div>
 \[
@@ -58,11 +58,11 @@ a+b=b+a
 </div>
 </section>
 <section>
-<h1>code</h1>
+<h1 id="code">code</h1>
 <p><code>code</code></p>
 </section>
 <section>
-<h1>list</h1>
+<h1 id="list">list</h1>
 <ul>
 <li>list1</li>
 <ul>
@@ -89,11 +89,13 @@ a+b=b+a
 		</div>
 	</div>
 </main>
-
-
+</div>
+<script>const toch3map = {'head1-3' :{ h1: 'head1-1', h2: 'head1-2'},'head2-3' :{ h1: 'head2-1', h2: 'head2-2'},}
+const toch2map = {'head1-2' :{ h1: 'head1-1'},'head2-2' :{ h1: 'head2-1'},}
+</script>
 <script src="../../../render/sidebar.js"></script> 
 <script src="../../../render/common.js"></script> 
+<script src="../../../render/toc.js"></script> 
 
 </body>
 </html>
-

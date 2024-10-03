@@ -19,14 +19,14 @@ inline string blog_html_english_head = R"xxxxx(
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link href="../../../render/sidebar.css" rel="stylesheet">
+	<link href="../../../render/toc.css" rel="stylesheet">
 	<link href="../../../render/common.css" rel="stylesheet">
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<main>
 )xxxxx";
 
-inline string blog_html_tail = R"xxxxx(
+inline string blog_html_tail_1 = R"xxxxx(
 	
 	<div class="settings-menu">
 		<button class="settings-button">Control</button>
@@ -37,14 +37,16 @@ inline string blog_html_tail = R"xxxxx(
 		</div>
 	</div>
 </main>
+</div>
+)xxxxx";
 
-
+inline string blog_html_tail_2 = R"xxxxx(
 <script src="../../../render/sidebar.js"></script> 
 <script src="../../../render/common.js"></script> 
+<script src="../../../render/toc.js"></script> 
 
 </body>
 </html>
-
 )xxxxx";
 
 inline string blog_html_chinese_head = R"xxxxx(
@@ -65,11 +67,11 @@ inline string blog_html_chinese_head = R"xxxxx(
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link href="../../../render/sidebar.css" rel="stylesheet">
+	<link href="../../../render/toc.css" rel="stylesheet">
 	<link href="../../../render/common.css" rel="stylesheet">
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<main>
 )xxxxx";
 
 inline string blog_index_head = R"xxxxx(
