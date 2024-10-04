@@ -41,6 +41,13 @@ std::string unique_toc_name(std::string name, auto&& sets){
 	return name;
 }
 
+bool is_number(std::string str){
+	for(auto& c: str){
+		if(c > '9' || c < '0') return false;
+	}
+	return true;
+}
+
 std::vector<std::string> markdown_to_html(const std::string& markdown, string& blog_cate) {
 	std::set<std::string> toc_name;
 	std::vector<h1> h1v;
@@ -223,12 +230,24 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 			}
 			
 			if(sizev.size() == 1){
+				if(!is_number(sizev[0])){
+					std::cout << "[WARNING] img format : ![size...](path...)(optional: description), need size... but "
+							  << sizev[0] << ", use 50\% as default"<< std::endl;
+					sizev[0] = "50";
+				}
+
 				section << "<p></p><img src=\"" << blog_pic_source_path << blog_cate << "/" << linkv[0]<< "\" style=\"display: block; margin: 0 auto;width: " << sizev[0] << "%;\" alt=\"err! email me if you need\"><p></p>" << std::endl;
 				if(!desc.empty()) section << "<figure><figcaption>" << desc << "</figcaption></figure>";
 			}else{
 				section << "<p></p>";
 				int margin_left = (100 - [sizev](){int i=0;for(auto&n:sizev){i+=std::stoi(n);}return i+1;}()) / (sizev.size()+1);
 				for (int i = 0; i < sizev.size(); i ++) {
+					if(!is_number(sizev[i])){
+						std::cout << "[ERROR] img format : ![size...](path...)(optional: description), need size... but "
+								  << sizev[0] << std::endl;
+						sizev[0] = "30";
+					}
+
 					section << "<img src=\"" << blog_pic_source_path << blog_cate << "/" << linkv[i]<< "\" style=\"width: " << sizev[i] << "%; margin-left: " << margin_left << "%;\" alt=\"err! email me if you need\">" << std::endl;
 				}
 				section << "<p></p>";
@@ -328,7 +347,7 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 					toc << "<a class=\"toch3\" href=\"#" << h3.name_toc << "\">" << h3.name_real << "</a>";
 					toc << "</li>";
 				}
-				if(!h1.h2v.empty()) toc << "</ul>";
+				if(!h2.h3v.empty()) toc << "</ul>";
 
 				toc << "</li>";
 			}

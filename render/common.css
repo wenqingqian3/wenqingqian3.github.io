@@ -20,6 +20,10 @@ body {
 	--basic_black: #303030;
 	--basic_href: #a81010;
 	--basic_toc_black: #adafb1;
+
+	--basic-h1toc-color: #a81010;
+	--basic-h2toc-color: #ff4500;
+	--basic-h3toc-color: #ef7474;
 }
 
 @media (prefers-color-scheme: dark) {
