@@ -1,6 +1,6 @@
 ---
 title: redirect test
-date: 2024-4-5
+date: 2024-4-7
 category: cate2
 description: test 2
 ps:

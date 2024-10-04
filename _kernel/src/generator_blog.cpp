@@ -2,6 +2,7 @@
 #include "config.h"
 #include <set>
 #include <filesystem>
+#include <sstream>
 
 namespace fs = std::filesystem;
 
@@ -40,7 +41,36 @@ void generate_blog_index(vector<blog>& blogvec){
 	}
 
 	// 时间倒序
-	std::reverse(blogvec.begin(), blogvec.end());
+	// std::reverse(blogvec.begin(), blogvec.end());
+	sort(blogvec.begin(), blogvec.end(), [&](auto& bvl, auto& bvr){
+		int yearl, yearr, monthl, monthr, dayl, dayr;
+		{
+			std::stringstream ss(bvl.date);
+			std::string token;
+			std::getline(ss, token, '-');
+			yearl = std::stoi(token);
+			std::getline(ss, token, '-');
+			monthl = std::stoi(token);
+			std::getline(ss, token, '-');
+			dayl = std::stoi(token);
+		}
+		{
+			std::stringstream ss(bvr.date);
+			std::string token;
+			std::getline(ss, token, '-');
+			yearr = std::stoi(token);
+			std::getline(ss, token, '-');
+			monthr = std::stoi(token);
+			std::getline(ss, token, '-');
+			dayr = std::stoi(token);
+		}
+
+		if( yearl != yearr ) return yearl > yearr;
+		else if( monthl != monthr ) return monthl > monthr;
+		else if( dayl != dayr ) return dayl > dayr;
+		return true;
+
+	});
 
 	for(auto& cate : categories){
 		outfile << "<section><h1>" + cate + "</h1><ul>\n";
