@@ -4,29 +4,29 @@
 #include <filesystem>
 #include <sstream>
 
-namespace fs = std::filesystem;
+// namespace fs = std::filesystem;
 
-// 获取指定目录下的所有子文件夹
-std::vector<fs::path> listDirectories(const std::string& path) {
-	std::vector<fs::path> directories;
-	for (const auto& entry : fs::directory_iterator(path)) {
-		if (entry.is_directory()) {
-			directories.push_back(entry.path());
-		}
-	}
-	return directories;
-}
+// // 获取指定目录下的所有子文件夹
+// std::vector<fs::path> listDirectories(const std::string& path) {
+// 	std::vector<fs::path> directories;
+// 	for (const auto& entry : fs::directory_iterator(path)) {
+// 		if (entry.is_directory()) {
+// 			directories.push_back(entry.path());
+// 		}
+// 	}
+// 	return directories;
+// }
 
-// 获取指定目录下的所有 .cpp 文件，并去掉后缀
-std::vector<std::string> listCppFiles(const fs::path& directory) {
-	std::vector<std::string> cppFiles;
-	for (const auto& entry : fs::directory_iterator(directory)) {
-		if (entry.is_regular_file() && entry.path().extension() == ".cpp") {
-			cppFiles.push_back(entry.path().stem().string()); // 去掉 .cpp 后缀
-		}
-	}
-	return cppFiles;
-}
+// // 获取指定目录下的所有 .cpp 文件，并去掉后缀
+// std::vector<std::string> listCppFiles(const fs::path& directory) {
+// 	std::vector<std::string> cppFiles;
+// 	for (const auto& entry : fs::directory_iterator(directory)) {
+// 		if (entry.is_regular_file() && entry.path().extension() == ".cpp") {
+// 			cppFiles.push_back(entry.path().stem().string()); // 去掉 .cpp 后缀
+// 		}
+// 	}
+// 	return cppFiles;
+// }
 
 // 生成blog.html 索引页面
 void generate_blog_index(vector<blog>& blogvec){

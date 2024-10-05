@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 #include <set>
+#include <map>
+#include <any>
 
 #include "config.h"
 #include "blog.h"
@@ -48,7 +50,9 @@ bool is_number(std::string str){
 	return true;
 }
 
-std::vector<std::string> markdown_to_html(const std::string& markdown, string& blog_cate) {
+
+//* args: pic_path string required 
+std::vector<std::string> markdown_to_html(const std::string& markdown, std::map<std::string, std::any> args) {
 	std::set<std::string> toc_name;
 	std::vector<h1> h1v;
 	std::stringstream html;
@@ -236,7 +240,7 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 					sizev[0] = "50";
 				}
 
-				section << "<p></p><img src=\"" << blog_pic_source_path << blog_cate << "/" << linkv[0]<< "\" style=\"display: block; margin: 0 auto;width: " << sizev[0] << "%;\" alt=\"err! email me if you need\"><p></p>" << std::endl;
+				section << "<p></p><img src=\"" << std::any_cast<std::string>(args["pic_path"]) << "/" << linkv[0]<< "\" style=\"display: block; margin: 0 auto;width: " << sizev[0] << "%;\" alt=\"err! email me if you need\"><p></p>" << std::endl;
 				if(!desc.empty()) section << "<figure><figcaption>" << desc << "</figcaption></figure>";
 			}else{
 				section << "<p></p>";
@@ -248,7 +252,7 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 						sizev[0] = "30";
 					}
 
-					section << "<img src=\"" << blog_pic_source_path << blog_cate << "/" << linkv[i]<< "\" style=\"width: " << sizev[i] << "%; margin-left: " << margin_left << "%;\" alt=\"err! email me if you need\">" << std::endl;
+					section << "<img src=\"" << std::any_cast<std::string>(args["pic_path"]) << "/" << linkv[i]<< "\" style=\"width: " << sizev[i] << "%; margin-left: " << margin_left << "%;\" alt=\"err! email me if you need\">" << std::endl;
 				}
 				section << "<p></p>";
 				if(!desc.empty()) section << "<figure><figcaption>" << desc << "</figcaption></figure>";
@@ -328,7 +332,7 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 
 	// return html.str();
 
-	// generator toc
+	// *generator toc
 	std::stringstream toc;
 	if(!h1v.empty()){
 		toc << "<ul>";
@@ -358,7 +362,7 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 		toc << "</ul>";
 	}
 
-	// generate toc js map
+	// *generate toc js map
 	std::stringstream tocjsmap2;
 	tocjsmap2 << "const toch2map = {";
 	std::stringstream tocjsmap3;
@@ -379,14 +383,4 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, string& b
 	tocjsmap3 << "}\n" << tocjsmap2.str();
 
 	return {html.str(), toc.str(), tocjsmap3.str()};
-}
-
-std::vector<std::string> blog_markdown2html(std::string path, std::string cate){
-	std::ifstream inputFile(path);
-	std::stringstream buffer;
-	buffer << inputFile.rdbuf();
-	std::string markdown = buffer.str();
-	auto html = markdown_to_html(markdown, cate);
-
-	return html;
 }

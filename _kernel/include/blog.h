@@ -1,9 +1,12 @@
 #pragma once
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include "blog_html.h"
 #include <string>
 #include <vector>
+#include <map>
+#include <any>
 #include "config.h"
 using namespace std;
 
@@ -46,8 +49,7 @@ struct blog {
 			else
 				outfile << blog_html_chinese_head;
 
-			extern vector<string> blog_markdown2html(string, string);
-			auto vs = blog_markdown2html("../user/blog/" + category + "/" + target_file_name + ".md", category);
+			auto vs = blog_markdown2html();
 
 			outfile << "<div class=\"container\"><aside class=\"toc-container\"><nav class=\"toc-sidebar\">";
 
@@ -72,5 +74,17 @@ struct blog {
 			outfile << blog_html_tail_2;
 			outfile.close();
 		}
+	}
+
+	std::vector<std::string> blog_markdown2html(){
+		std::ifstream inputFile("../user/blog/" + category + "/" + target_file_name + ".md");
+		std::stringstream buffer;
+		buffer << inputFile.rdbuf();
+		std::string markdown = buffer.str();
+		extern std::vector<std::string> markdown_to_html(
+			const std::string& markdown, std::map<std::string, std::any>);
+		auto html = markdown_to_html(markdown, {{"pic_path", blog_pic_source_path + category}});
+
+		return html;
 	}
 };
