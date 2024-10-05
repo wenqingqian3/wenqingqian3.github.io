@@ -29,10 +29,7 @@
 // }
 
 // 生成blog.html 索引页面
-void generate_blog_index(vector<blog>& blogvec){
-	ofstream outfile(blog_index_path);
-	outfile << blog_index_head;
-
+void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 	set<string> categories;
 
 	for(auto& blog : blogvec){
@@ -72,26 +69,77 @@ void generate_blog_index(vector<blog>& blogvec){
 
 	});
 
-	for(auto& cate : categories){
-		outfile << "<section><h1>" + cate + "</h1><ul>\n";
-		for(auto& blog : blogvec){
-			if(blog.category == cate){
-				bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
-				string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.category + "/" + blog.target_file_name + ".html";
+	ofstream outfile(blog_index_path);
+	if( !if_gen_blog_index_toc ){
+		outfile << blog_index_head;
+		
+		for(auto& cate : categories){
+			outfile << "<section><h1>" + cate + "</h1><ul>\n";
+			for(auto& blog : blogvec){
+				if(blog.category == cate){
+					bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+					string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.category + "/" + blog.target_file_name + ".html";
 
-				outfile << "<li><a href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
-				if(blog.ps != "" && blog.ps != "none"){
-					outfile << ", "+blog.ps;
+					outfile << "<li><a href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
+					if(blog.ps != "" && blog.ps != "none"){
+						outfile << ", "+blog.ps;
+					}
+					outfile << " )";
+					if(blog.description != "" && blog.description != "none"){
+						outfile << "<p>"+blog.description+"</p>";
+					}
+					outfile << "</li>\n";
 				}
-				outfile << " )";
-				if(blog.description != "" && blog.description != "none"){
-					outfile << "<p>"+blog.description+"</p>";
+			}
+			outfile << "</ul></section>\n";
+		}
+
+		outfile << blog_index_tail;
+	}else{
+
+		// build index markdown then markdown-to-html to get html, toc, tocmap
+		std::stringstream index_md;
+		for(auto& cate : categories){
+			index_md << "# " << cate << '\n';
+			for(auto& blog : blogvec){
+				if(blog.category == cate){
+					bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+					string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.category + "/" + blog.target_file_name + ".html";
+
+					index_md << "- <a href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
+					if(blog.ps != "" && blog.ps != "none"){
+						index_md << ", " << blog.ps;
+					}
+					index_md << " )\n";
+					if(blog.description != "" && blog.description != "none"){
+						extern std::string ltrim(const std::string&);
+						index_md << "  " << ltrim(blog.description) << '\n';
+					}
 				}
-				outfile << "</li>\n";
 			}
 		}
-		outfile << "</ul></section>\n";
-	}
 
-	outfile << blog_index_tail;
+		extern std::vector<std::string> markdown_to_html(
+			const std::string& markdown, std::map<std::string, std::any>);
+		auto vs = markdown_to_html(index_md.str(), {});
+
+		outfile << blog_index_toc_head_1;
+
+		outfile << "<div class=\"container\"><aside class=\"toc-container\"><nav class=\"toc-sidebar\">";
+
+		outfile << vs[1];
+
+		outfile << "</nav></aside>";
+
+		outfile << blog_index_toc_head_2;
+
+		outfile << vs[0];
+
+		outfile << blog_index_toc_tail_1;
+
+		outfile << "<script>" << vs[2] << "\n</script>";
+
+		outfile << blog_index_toc_tail_2;
+		outfile.close();
+	}
 }

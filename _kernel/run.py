@@ -10,6 +10,8 @@ import argparse
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--command', type=str, help='command', required=False, default='update')
+    parser.add_argument('-bit', '--blog_index_toc', type=str, help='blog_index_toc', required=False, default='on')
+    
     args = parser.parse_args()
 
     # Define paths
@@ -152,8 +154,8 @@ if __name__ == '__main__':
                 new_content += "\nvoid blog_generate(){\n\tvector<blog> blogvec {\n"
                 for name in names:
                     new_content += f"\t\t{name},\n"
-                new_content += "\t};\n\textern void generate_blog_index(vector<blog>&);\n"
-                new_content += "\tgenerate_blog_index(blogvec);\n}\n"
+                new_content += "\t};\n\textern void generate_blog_index(vector<blog>&, bool);\n"
+                new_content += "\tgenerate_blog_index(blogvec, IF_GEN_BLOG_INDEX_TOC);\n}\n"
             elif "// blog_generator_end" in line:
                 inside_block = False
                 new_content += line
@@ -178,7 +180,7 @@ if __name__ == '__main__':
         subprocess.run(["make", "-j8"], cwd="build")
 
         # Run generator
-        subprocess.run(["./generator"])
+        subprocess.run(["./generator", args.blog_index_toc])
 
     elif (args.command == "run"):
-        subprocess.run(["./generator"])
+        subprocess.run(["./generator", args.blog_index_toc])

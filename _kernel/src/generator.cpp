@@ -1,5 +1,8 @@
 #include "blog.h"
 #include "config.h"
+
+bool IF_GEN_BLOG_INDEX_TOC;
+
 // blog_generator_beg
 extern blog blog_cate1_s1;
 extern blog blog_cate2_redirect;
@@ -11,13 +14,16 @@ void blog_generate(){
 		blog_cate2_redirect,
 		blog_cate2_language,
 	};
-	extern void generate_blog_index(vector<blog>&);
-	generate_blog_index(blogvec);
+	extern void generate_blog_index(vector<blog>&, bool);
+	generate_blog_index(blogvec, IF_GEN_BLOG_INDEX_TOC);
 }
 // blog_generator_end
 
-int main()
+int main(int argc, char** argv)
 {
+	if(strcmp(argv[0], "on")) IF_GEN_BLOG_INDEX_TOC = true;
+	else                      IF_GEN_BLOG_INDEX_TOC = false;
+
 	blog_generate();
 }
 
