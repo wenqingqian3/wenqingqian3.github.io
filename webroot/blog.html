@@ -8,6 +8,7 @@
 	<title>Blog</title>
 	<link rel="icon" href="../render/icon/appletree.png" type="image/png">
 	<link href="../render/fonts.css" rel="stylesheet">
+	<link href="../render/toc.css" rel="stylesheet">
 	<link href="../render/style_base.css" rel="stylesheet">
 	<link href="../render/style_english.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,16 +19,26 @@
 	<link href="../render/common.css" rel="stylesheet">
 </head>
 <body>
+
+<div class="container"><aside class="toc-container"><nav class="toc-sidebar"><ul><li><a class="toch1" href="#cate1">cate1</a></li><li><a class="toch1" href="#cate2">cate2</a></li></ul></nav></aside>
 <main>
 	<header>Notes</header>
 	<div class='disp-toc-header'><p>This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository</p></div>
-<section><h1>cate1</h1><ul>
+<section>
+<h1 id="cate1">cate1</h1>
+<ul>
 <li><a href="../webroot/blog/cate1/s1.html">basic test</a> ( 2024-4-5, html )</li>
-</ul></section>
-<section><h1>cate2</h1><ul>
-<li><a href="./assets/redirect-page/test.pdf">redirect test</a> ( 2024-4-7, pdf )<p>test 2</p></li>
-<li><a href="../webroot/blog/cate2/language.html">language test</a> ( 2024-4-6, html )<p>english</p></li>
-</ul></section>
+</ul>
+</section>
+<section>
+<h1 id="cate2">cate2</h1>
+<ul>
+<li><a href="./assets/redirect-page/test.pdf">redirect test</a> ( 2024-4-7, pdf )</li>
+<p style="margin-bottom: 0em;">test 2</p>
+<li><a href="../webroot/blog/cate2/language.html">language test</a> ( 2024-4-6, html )</li>
+<p style="margin-bottom: 0em;">english</p>
+</ul>
+</section>
 
 		<div class="settings-menu">
 		<button class="settings-button">Control</button>
@@ -37,10 +48,13 @@
 		</div>
 	</div>
 </main>
-
-
+<div>
+<script>const toch3map = {}
+const toch2map = {}
+</script>
 <script src="../render/sidebar.js"></script> 
 <script src="../render/common.js"></script> 
+<script src="../render/toc.js"></script> 
 
 </body>
 </html>
