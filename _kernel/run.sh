@@ -1,3 +1,5 @@
+echo "use python.py, this script is deprecated"
+
 # 将BLOG_MD 解析到 BLOG_CPP 生成每个blog对应的cpp文件, 里面包含这个blog对应的结构体
 BLOG_MD="../user/blog/"
 BLOG_CPP="./src/_blog/"
