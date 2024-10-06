@@ -19,7 +19,7 @@ if __name__ == '__main__':
     BLOG_CPP = "./src/_blog/"
     BLOG_WEB = "../webroot/blog/"
 
-    if (args.command == "clean"):
+    if (args.command == "clean" or args.command == "all"):
         build_src = "./build"
         if os.path.exists(build_src):
             shutil.rmtree(build_src)
@@ -27,7 +27,7 @@ if __name__ == '__main__':
             shutil.rmtree(BLOG_WEB)
         os.makedirs(BLOG_WEB)
     
-    elif (args.command == "update"):
+    if (args.command == "update" or args.command == "all"):
         # Delete and create a new BLOG_CPP directory
         if os.path.exists(BLOG_CPP):
             shutil.rmtree(BLOG_CPP)
@@ -195,5 +195,5 @@ if __name__ == '__main__':
         # Run generator
         # subprocess.run(["./generator", args.blog_index_toc])
 
-    elif (args.command == "run"):
+    if (args.command == "run" or args.command == "all"):
         subprocess.run(["./generator", args.blog_index_toc])

@@ -36,7 +36,7 @@ window.onload = function() {
 	}
 };
 
-// 调整 max-width 的函数
+// adjust max-width
 function adjustMaxWidthAdd() {
 	const root = document.documentElement;
 	const currentMaxWidth = getComputedStyle(root).getPropertyValue('--max-width-show').trim();

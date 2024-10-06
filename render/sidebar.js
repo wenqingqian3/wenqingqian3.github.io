@@ -14,7 +14,7 @@ settingsMenu.addEventListener('mouseleave', () => {
 	hideTimeout = setTimeout(() => {
 	settingsOptions.style.visibility = 'hidden';
 	settingsOptions.style.opacity = '0';
-	}, 500); // 延迟500ms后隐藏
+	}, 500); // hidden latency
 });
 
 settingsOptions.addEventListener('mouseenter', () => {
@@ -25,5 +25,5 @@ settingsOptions.addEventListener('mouseleave', () => {
 	hideTimeout = setTimeout(() => {
 	settingsOptions.style.visibility = 'hidden';
 	settingsOptions.style.opacity = '0';
-	}, 500); // 延迟500ms后隐藏
+	}, 500);
 });
