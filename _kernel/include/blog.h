@@ -14,6 +14,7 @@ struct blog {
 	string title;
 	string author;
 	string date;
+	int date_year, date_month, date_day;
 	string description;
 	string type;
 	string language;
@@ -37,7 +38,15 @@ struct blog {
 	// description
 
 	void generate(){
-		//TODO gen time 
+		//* gen time 
+		std::stringstream ss(date);
+		std::string token;
+		std::getline(ss, token, '-');
+		date_year = std::stoi(token);
+		std::getline(ss, token, '-');
+		date_month = std::stoi(token);
+		std::getline(ss, token, '-');
+		date_day = std::stoi(token);
 		//* gen cate
 		std::stringstream space_split(category);
 		std::string cate;
