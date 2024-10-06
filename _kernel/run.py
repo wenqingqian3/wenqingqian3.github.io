@@ -112,7 +112,7 @@ if __name__ == '__main__':
                             cpp.write(f'    date: "{date}",\n')
                             cpp.write(f'    description: "{description}",\n')
                             cpp.write(f'    category: "{category}",\n')
-                            cpp.write(f'    major_category: "{blog_cate_only}",\n')
+                            cpp.write(f'    pri_category: "{blog_cate_only}",\n')
                             cpp.write(f'    author: "{author}",\n')
                             cpp.write(f'    type: "{type_}",\n')
                             cpp.write(f'    language: "{language}",\n')
