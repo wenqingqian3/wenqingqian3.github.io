@@ -3,29 +3,30 @@
 [demo](https://wenqingqian3.github.io)
 
 ```txt
-文件结构
-|- _kernel : 生成器源文件, 部分代码自动生成
-|- render : 页面渲染文件
-|- user \- blog : 必须设置category, 里面存放markdown, 文件内部cate要与文件夹名对应
-        |- _blog_history : 自动生成, 上一版本的 webroot/_blog/*
-|- webroot 网站根目录 \- index.html (主页) 手动修改
-                     |- blog.html 自动生成
-                     |- assets : 存放资源 \- resume.pdf
-                                         |- download.html -> ./download/
-                                         |- redirect-page : redirect blog 存放在这(相对路径) 
-                                             可以在kernel/src/generator_blog.cpp 50行改
+|- _kernel : Generator source file, partially auto-generated
+|- render : Web page render, including css, js, icon, etc.
+|- user \- blog : Markdown source files must be split into several categories, and the category written in the markdown must match the directory name
+        |- _blog_history : Auto-generated files in webroot/_blog/*
+|- webroot \- index.html (homepage) manually created
+           |- blog.html auto-generated
+           |- assets :     \- resume.pdf
+           (resource repo) |- download.html -> ./download/
+                           |- redirect-page : Blog redirect pages should be placed here
+```
 
-markdown转html支持格式
-1. #, ##, ### 三级标题
-2. - 支持嵌套无序列表
-3. ![size1,size2...](link1,link2...)(description(可选)) 单行多图, size为单行宽度百分比
-4. $eq$ 行内公式, $$eq$$ 单行公式, `code` 行内代码
+### Supported Markdown-to-HTML syntax
+1. #, ##, ### Three levels of headings
+2. `-` List
+3. `![size1,size2...](link1,link2...)(description(Optional))` Multiple images in one line, where `size` represents the percentage of the image’s display width in a line
+4. `$eq$` Inline formula, `$$eq$$` Block formula, \`code\` Inline code
 
-error:
-1. category 不支持空格
+### Features
+1. Multi-category support: `category: cate1 cate2`
+   You can specify multiple categories for a post, but the source file must be placed in a specific category directory, which also contains the images. The directory name will be used as the primary category name, and a page will be generated only in this category.
+   Sub-categories will be used to generate links in the blog index page.
 
-
-
+### usage
+```shell
 cd _kernel
-./run.sh
+python run.py -c all
 ```

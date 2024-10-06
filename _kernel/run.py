@@ -40,6 +40,7 @@ if __name__ == '__main__':
         open(cmake_src, 'w').close()
 
         # Traverse folders in the BLOG_MD directory
+        multi_cate_once_gen = set()
         for blog_cate in os.listdir(BLOG_MD):
             blog_cate_path = os.path.join(BLOG_MD, blog_cate)
             
@@ -81,14 +82,25 @@ if __name__ == '__main__':
                         date = get_field("date")
                         description = get_field("description")
                         category = get_field("category")
+                        categorys = []
+                        if category : categorys = category.split()
+                        
                         author = get_field("author")
                         type_ = get_field("type")
                         language = get_field("language")
                         ps = get_field("ps")
                         redirect = get_field("redirect")
 
-                        if category and category != blog_cate_only:
-                            print(f"Warning: blog {file} category in file ({category}) doesn't match its directory name ({blog_cate_only}).")
+                        if category and blog_cate_only not in categorys:
+                            print(f"Warning: blog {file} category in file ({category}) \
+                                  doesn't match its directory name ({blog_cate_only}).")
+                        
+                        if len(categorys) > 1:
+                            if not multi_cate_once_gen.__contains__(f"{struct_name}{category}{title}"):
+                                multi_cate_once_gen.add(f"{struct_name}{category}{title}")
+                            else:
+                                print(f"error: file {blog_cate_only}/{filename}.md exist in other cate in {category}") 
+                                continue
 
                         # Generate .cpp file
                         cpp_file = os.path.join(blog_cpp_cate_path, f"{filename}.cpp")
@@ -100,6 +112,7 @@ if __name__ == '__main__':
                             cpp.write(f'    date: "{date}",\n')
                             cpp.write(f'    description: "{description}",\n')
                             cpp.write(f'    category: "{category}",\n')
+                            cpp.write(f'    major_category: "{blog_cate_only}",\n')
                             cpp.write(f'    author: "{author}",\n')
                             cpp.write(f'    type: "{type_}",\n')
                             cpp.write(f'    language: "{language}",\n')
@@ -180,7 +193,7 @@ if __name__ == '__main__':
         subprocess.run(["make", "-j8"], cwd="build")
 
         # Run generator
-        subprocess.run(["./generator", args.blog_index_toc])
+        # subprocess.run(["./generator", args.blog_index_toc])
 
     elif (args.command == "run"):
         subprocess.run(["./generator", args.blog_index_toc])
