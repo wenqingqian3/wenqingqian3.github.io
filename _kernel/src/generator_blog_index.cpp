@@ -34,7 +34,8 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 
 	for(auto& blog : blogvec){
 		blog.generate();
-		categories.emplace(blog.category);
+		for( auto& cate: blog.categories)
+			categories.emplace(cate);
 	}
 
 	// 时间倒序
@@ -76,19 +77,21 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 		for(auto& cate : categories){
 			outfile << "<section><h1>" + cate + "</h1><ul>\n";
 			for(auto& blog : blogvec){
-				if(blog.category == cate){
-					bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
-					string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.category + "/" + blog.target_file_name + ".html";
+				for(auto& mcate : blog.categories){
+					if(mcate == cate){
+						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
-					outfile << "<li><a href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
-					if(blog.ps != "" && blog.ps != "none"){
-						outfile << ", "+blog.ps;
+						outfile << "<li><a href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
+						if(blog.ps != "" && blog.ps != "none"){
+							outfile << ", "+blog.ps;
+						}
+						outfile << " )";
+						if(blog.description != "" && blog.description != "none"){
+							outfile << "<p>"+blog.description+"</p>";
+						}
+						outfile << "</li>\n";
 					}
-					outfile << " )";
-					if(blog.description != "" && blog.description != "none"){
-						outfile << "<p>"+blog.description+"</p>";
-					}
-					outfile << "</li>\n";
 				}
 			}
 			outfile << "</ul></section>\n";
@@ -102,18 +105,20 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 		for(auto& cate : categories){
 			index_md << "# " << cate << '\n';
 			for(auto& blog : blogvec){
-				if(blog.category == cate){
-					bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
-					string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.category + "/" + blog.target_file_name + ".html";
+				for(auto& mcate : blog.categories){
+					if(mcate == cate){
+						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
-					index_md << "- <a href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
-					if(blog.ps != "" && blog.ps != "none"){
-						index_md << ", " << blog.ps;
-					}
-					index_md << " )\n";
-					if(blog.description != "" && blog.description != "none"){
-						extern std::string ltrim(const std::string&);
-						index_md << "  " << ltrim(blog.description) << '\n';
+						index_md << "- <a href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
+						if(blog.ps != "" && blog.ps != "none"){
+							index_md << ", " << blog.ps;
+						}
+						index_md << " )\n";
+						if(blog.description != "" && blog.description != "none"){
+							extern std::string ltrim(const std::string&);
+							index_md << "  " << ltrim(blog.description) << '\n';
+						}
 					}
 				}
 			}

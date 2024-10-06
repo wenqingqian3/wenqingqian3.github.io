@@ -6,6 +6,7 @@ struct blog blog_cate1_s1 = {
     date: "2024-4-5",
     description: "",
     category: "cate1 multi-cate",
+    pri_category: "cate1",
     author: "",
     type: "html",
     language: "chinese",

@@ -18,6 +18,8 @@ struct blog {
 	string type;
 	string language;
 	string category;
+	vector<string> categories;
+	string pri_category;
 	string target_file_name;
 	string ps; 
 	string content;
@@ -35,9 +37,17 @@ struct blog {
 	// description
 
 	void generate(){
+		//TODO gen time 
+		//* gen cate
+		std::stringstream space_split(category);
+		std::string cate;
+		while( space_split >> cate ){
+			categories.emplace_back(cate);
+		}
+
 		// 这里是生成blog对应的html文件, 如果是pdf只用在generator中对blog.html设置链接就行
 		if(redirect == "" || redirect == "none"){
-			string filename = blog_html_source_path + category + "/" + target_file_name + ".html";
+			string filename = blog_html_source_path + pri_category + "/" + target_file_name + ".html";
 
 			ofstream outfile(filename);
 			if (!outfile) {
@@ -77,13 +87,13 @@ struct blog {
 	}
 
 	std::vector<std::string> blog_markdown2html(){
-		std::ifstream inputFile("../user/blog/" + category + "/" + target_file_name + ".md");
+		std::ifstream inputFile("../user/blog/" + pri_category + "/" + target_file_name + ".md");
 		std::stringstream buffer;
 		buffer << inputFile.rdbuf();
 		std::string markdown = buffer.str();
 		extern std::vector<std::string> markdown_to_html(
 			const std::string& markdown, std::map<std::string, std::any>);
-		auto html = markdown_to_html(markdown, {{"pic_path", blog_pic_source_path + category}});
+		auto html = markdown_to_html(markdown, {{"pic_path", blog_pic_source_path + pri_category}});
 
 		return html;
 	}
