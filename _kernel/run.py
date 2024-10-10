@@ -193,7 +193,7 @@ if __name__ == '__main__':
         subprocess.run(["make", "-j8"], cwd="build")
 
         # Run generator
-        # subprocess.run(["./generator", args.blog_index_toc])
+        subprocess.run(["./generator", args.blog_index_toc])
 
     if (args.command == "run" or args.command == "all"):
         subprocess.run(["./generator", args.blog_index_toc])

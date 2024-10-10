@@ -60,7 +60,19 @@ p {
 	margin-top: 0.5em;
 }
 a {
-	color: var(--basic_href);
+	color: var(--basic_href_online);
+	text-decoration: none;
+}
+a.html {
+	color: var(--basic_href_html);
+	text-decoration: none;
+}
+a.assets {
+	color: var(--basic_href_assets);
+	text-decoration: none;
+}
+a.online {
+	color: var(--basic_href_online);
 	text-decoration: none;
 }
 a:hover {

@@ -57,15 +57,18 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){
 						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						string href_class = isredirect ? 
+											(blog.type == "online" ? "class=\"online\"" : "class=\"assets\"") 
+											: "class=\"html\"";
 						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
-						outfile << "<li><a href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
+						outfile << "<li><a " << href_class << " href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
 						if(blog.ps != "" && blog.ps != "none"){
 							outfile << ", "+blog.ps;
 						}
 						outfile << " )";
 						if(blog.description != "" && blog.description != "none"){
-							outfile << "<p>"+blog.description+"</p>";
+							outfile << "<p style=\"color:#adafb1;\">"+blog.description+"</p>";
 						}
 						outfile << "</li>\n";
 					}
@@ -85,16 +88,19 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){
 						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						string href_class = isredirect ? 
+											(blog.type == "online" ? "class=\"online\"" : "class=\"assets\"") 
+											: "class=\"html\"";
 						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
-						index_md << "- <a href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
+						index_md << "- <a " << href_class << " href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
 						if(blog.ps != "" && blog.ps != "none"){
 							index_md << ", " << blog.ps;
 						}
 						index_md << " )\n";
 						if(blog.description != "" && blog.description != "none"){
 							extern std::string ltrim(const std::string&);
-							index_md << "  " << ltrim(blog.description) << '\n';
+							index_md << "  !@#$" << ltrim(blog.description) << '\n';
 						}
 					}
 				}

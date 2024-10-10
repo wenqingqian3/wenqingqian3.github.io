@@ -105,7 +105,10 @@ std::vector<std::string> markdown_to_html(const std::string& markdown, std::map<
 				
 				item = std::regex_replace(item, std::regex("\\$(.*?)\\$"), "\\($1\\)");
 				item = std::regex_replace(item, std::regex("\\`(.*?)\\`"), "<code>$1</code>");
-				section << "<p style=\"margin-bottom: 0em;\">" << item << "</p>" << std::endl;
+				if(item[0]=='!'&&item[1]=='@'&&item[2]=='#'&&item[3]=='$')
+					section << "<p style=\"margin-bottom: 0em;color:#adafb1\">" << item.substr(4) << "</p>" << std::endl;
+				else
+					section << "<p style=\"margin-bottom: 0em;\">" << item << "</p>" << std::endl;
 				continue;
 			}else{
 				for(int i = 0; i < 100; i ++){

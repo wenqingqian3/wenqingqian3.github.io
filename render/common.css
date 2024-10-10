@@ -18,7 +18,9 @@
 body {
 	--basic_white: RGB(248,250,253);
 	--basic_black: #303030;
-	--basic_href: #a81010;
+	--basic_href_html: #a81010;
+	--basic_href_assets: #bb86fc;
+	--basic_href_online: rgb(0, 136, 255);
 	--basic_toc_black: #adafb1;
 
 	--basic-h1toc-color: #a81010;
@@ -30,7 +32,9 @@ body {
 	body {
 		--basic_white: #303030;
 		--basic_black: RGB(248,250,253);
-		--basic_href: #bb86fc;
+		--basic_href_html: #bb86fc;	
+		--basic_href_assets: #a81010;
+		--basic_href_online: rgb(0, 136, 255);
 		--basic_toc_black: #adafb1;
 	}
 }
