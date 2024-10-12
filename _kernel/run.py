@@ -18,6 +18,7 @@ if __name__ == '__main__':
     BLOG_MD = "../user/blog/"
     BLOG_CPP = "./src/_blog/"
     BLOG_WEB = "../webroot/blog/"
+    BLOG_ONLINE = "../user/blog_online/"
 
     if (args.command == "clean" or args.command == "all"):
         build_src = "./build"
@@ -26,12 +27,16 @@ if __name__ == '__main__':
         if os.path.exists(BLOG_WEB):
             shutil.rmtree(BLOG_WEB)
         os.makedirs(BLOG_WEB)
+        os.makedirs(BLOG_WEB+"_/")
     
     if (args.command == "update" or args.command == "all"):
         # Delete and create a new BLOG_CPP directory
         if os.path.exists(BLOG_CPP):
             shutil.rmtree(BLOG_CPP)
         os.makedirs(BLOG_CPP)
+
+        if not os.path.exists(BLOG_WEB+"_/"):
+            os.makedirs(BLOG_WEB+"_/")
 
         # Generate CMakeLists.txt
         cmake_src = "./src/CMakeLists.txt"
@@ -121,6 +126,47 @@ if __name__ == '__main__':
                             cpp.write("};\n")
 
                         print(f"Created {cpp_file}")
+            
+        # Traverse data in the BLOG_ONLINE directory
+        import yaml
+        with open(BLOG_ONLINE+'_autogen_row_online_metadata.txt', 'w') as metadata:
+            with open(BLOG_ONLINE+'online_metadata.yml', 'r') as file:
+                data = yaml.safe_load(file)
+                count = 0
+                for entry in data:
+                    metadata.write(f'{entry["title"]}\t{entry["cate"]}\t{entry["author"]}\t{entry["platform"]}\t{entry["date"]}\t{entry["link"]}\t{entry["note"]}\n')
+                    blog_cate = entry['cate']
+                    blog_cate_path = os.path.join(BLOG_CPP, blog_cate)
+                    if not os.path.exists(blog_cate_path):
+                        os.makedirs(blog_cate_path)
+
+                        with open(os.path.join(blog_cate_path, "CMakeLists.txt"), "w") as cmake_file:
+                            cmake_file.write(f'file(GLOB blogfile "*.cpp")\n')
+                            cmake_file.write(f'add_library(blog_{blog_cate} STATIC ${{blogfile}})\n')
+
+                        # Update the main CMakeLists.txt
+                        with open(cmake_src, "a") as cmake_file:
+                            cmake_file.write(f'add_subdirectory(./_blog/{blog_cate})\n')
+
+                    count += 1
+                    cpp_file = os.path.join(blog_cate_path, f"reprint_{blog_cate}_{count}.cpp")
+                    with open(cpp_file, "w") as cpp:
+                        cpp.write('#include "blog.h"\n\n')
+                        cpp.write(f"struct blog blog_reprint_{blog_cate}_{count} = {{\n")
+                        cpp.write(f'    target_file_name: "{entry["note"]}",\n')
+                        cpp.write(f'    title: "{entry["title"]}",\n')
+                        cpp.write(f'    date: "{entry["date"]}",\n')
+                        cpp.write(f'    category: "{entry["cate"]}",\n')
+                        cpp.write(f'    author: "{entry["author"]}",\n')
+                        cpp.write(f'    type: "online",\n')
+                        if entry['note'] is not None and entry['note'] != "none":
+                            cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}, <a class=\\"html\\" href=\\"./blog/_/{entry["note"]}.html\\">note</a>",\n')
+                        else:
+                            cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}",\n')
+                        cpp.write(f'    redirect: "{entry["link"]}",\n')
+                        cpp.write("};\n")
+
+                    print(f"Created {cpp_file}")
 
         # Append to the CMakeLists.txt
         with open(cmake_src, "a") as cmake_file:
@@ -128,8 +174,8 @@ if __name__ == '__main__':
             cmake_file.write('add_executable(generator ${file})\n')
 
         # Traverse the generator's target_link_libraries
-        for blog_cate in os.listdir(BLOG_MD):
-            blog_cate_path = os.path.join(BLOG_MD, blog_cate)
+        for blog_cate in os.listdir(BLOG_CPP):
+            blog_cate_path = os.path.join(BLOG_CPP, blog_cate)
             if os.path.isdir(blog_cate_path):
                 blog_cate_only = os.path.basename(blog_cate_path)
                 with open(cmake_src, "a") as cmake_file:

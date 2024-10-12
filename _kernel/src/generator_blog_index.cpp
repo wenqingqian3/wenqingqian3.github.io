@@ -1,5 +1,6 @@
 #include "blog.h"
 #include "config.h"
+#include "util.h"
 #include <set>
 #include <filesystem>
 #include <sstream>
@@ -47,6 +48,8 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 		return true;
 	});
 
+	extern std::vector<std::string> markdown_to_html(
+		const std::string& markdown, std::map<std::string, std::any>);
 	ofstream outfile(blog_index_path);
 	if( !if_gen_blog_index_toc ){
 		outfile << blog_index_head;
@@ -57,10 +60,13 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){
 						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						bool isonline = (blog.type == "online");
 						string href_class = isredirect ? 
-											(blog.type == "online" ? "class=\"online\"" : "class=\"assets\"") 
+											(isonline ? "class=\"online\"" : "class=\"assets\"") 
 											: "class=\"html\"";
-						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
+						string path = isredirect ? 
+									( isonline ? blog.redirect : "./assets/redirect-page/" + blog.redirect) 
+									: blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
 						outfile << "<li><a " << href_class << " href=\""+path+"\">"+blog.title+"</a> ( "+blog.date+", "+blog.type;
 						if(blog.ps != "" && blog.ps != "none"){
@@ -88,10 +94,13 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){
 						bool isredirect = !(blog.redirect == "" || blog.redirect == "none");
+						bool isonline = (blog.type == "online");
 						string href_class = isredirect ? 
-											(blog.type == "online" ? "class=\"online\"" : "class=\"assets\"") 
+											(isonline ? "class=\"online\"" : "class=\"assets\"") 
 											: "class=\"html\"";
-						string path = isredirect ? "./assets/redirect-page/" + blog.redirect : blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
+						string path = isredirect ? 
+									( isonline ? blog.redirect : "./assets/redirect-page/" + blog.redirect) 
+									: blog_html_source_path + blog.pri_category + "/" + blog.target_file_name + ".html";
 
 						index_md << "- <a " << href_class << " href=\"" << path << "\">" << blog.title << "</a> ( " << blog.date << ", " << blog.type;
 						if(blog.ps != "" && blog.ps != "none"){
@@ -99,7 +108,7 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 						}
 						index_md << " )\n";
 						if(blog.description != "" && blog.description != "none"){
-							extern std::string ltrim(const std::string&);
+							
 							index_md << "  !@#$" << ltrim(blog.description) << '\n';
 						}
 					}
@@ -107,8 +116,6 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 			}
 		}
 
-		extern std::vector<std::string> markdown_to_html(
-			const std::string& markdown, std::map<std::string, std::any>);
 		auto vs = markdown_to_html(index_md.str(), {});
 
 		outfile << blog_index_toc_head_1;
