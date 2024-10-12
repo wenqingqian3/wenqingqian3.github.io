@@ -1,11 +1,24 @@
 import os
 import shutil
 import subprocess
-
+import re
 import argparse
+from colorama import Fore, Style, init
 
+init(autoreset=True)
 
+def print_warning(message):
+    print(Fore.YELLOW + "[WARNING] " + message)
 
+def print_error(message):
+    print(Fore.RED + "[ERROR] " + message)
+
+def print_info(message):
+    print(Fore.GREEN + "[INFO] " + message)
+
+def replace_invalid_chars(s):
+    # 使用正则表达式，匹配非字母、非数字、非下划线的字符
+    return re.sub(r'[^\w]', 'UNVAILD_TOKEN', s)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -58,15 +71,15 @@ if __name__ == '__main__':
                     os.makedirs(blog_web_cate_path)
 
                 # Create BLOG_CPP directory and CMakeLists.txt
-                blog_cpp_cate_path = os.path.join(BLOG_CPP, blog_cate_only)
+                blog_cpp_cate_path = os.path.join(BLOG_CPP, replace_invalid_chars(blog_cate_only))
                 os.makedirs(blog_cpp_cate_path)
                 with open(os.path.join(blog_cpp_cate_path, "CMakeLists.txt"), "w") as cmake_file:
                     cmake_file.write(f'file(GLOB blogfile "*.cpp")\n')
-                    cmake_file.write(f'add_library(blog_{blog_cate_only} STATIC ${{blogfile}})\n')
+                    cmake_file.write(f'add_library(blog_{replace_invalid_chars(blog_cate_only)} STATIC ${{blogfile}})\n')
 
                 # Update the main CMakeLists.txt
                 with open(cmake_src, "a") as cmake_file:
-                    cmake_file.write(f'add_subdirectory(./_blog/{blog_cate_only})\n')
+                    cmake_file.write(f'add_subdirectory(./_blog/{replace_invalid_chars(blog_cate_only)})\n')
 
                 # Traverse .md files
                 for file in os.listdir(blog_cate_path):
@@ -97,21 +110,21 @@ if __name__ == '__main__':
                         redirect = get_field("redirect")
 
                         if category and blog_cate_only not in categorys:
-                            print(f"Warning: blog {file} category in file ({category}) \
+                            print_warning(f"blog {file} category in file ({category}) \
                                   doesn't match its directory name ({blog_cate_only}).")
                         
                         if len(categorys) > 1:
                             if not multi_cate_once_gen.__contains__(f"{struct_name}{category}{title}"):
                                 multi_cate_once_gen.add(f"{struct_name}{category}{title}")
                             else:
-                                print(f"error: file {blog_cate_only}/{filename}.md exist in other cate in {category}") 
+                                print_error(f"file {blog_cate_only}/{filename}.md exist in other cate in {category}") 
                                 continue
 
                         # Generate .cpp file
                         cpp_file = os.path.join(blog_cpp_cate_path, f"{filename}.cpp")
                         with open(cpp_file, "w") as cpp:
                             cpp.write('#include "blog.h"\n\n')
-                            cpp.write(f"struct blog blog_{blog_cate_only}_{struct_name} = {{\n")
+                            cpp.write(f"struct blog blog_{replace_invalid_chars(blog_cate_only)}_{struct_name} = {{\n")
                             cpp.write(f'    target_file_name: "{filename}",\n')
                             cpp.write(f'    title: "{title}",\n')
                             cpp.write(f'    date: "{date}",\n')
@@ -125,48 +138,49 @@ if __name__ == '__main__':
                             cpp.write(f'    redirect: "{redirect}",\n')
                             cpp.write("};\n")
 
-                        print(f"Created {cpp_file}")
+                        print_info(f"Created {cpp_file}")
             
         # Traverse data in the BLOG_ONLINE directory
         import yaml
         with open(BLOG_ONLINE+'_autogen_row_online_metadata.txt', 'w') as metadata:
             with open(BLOG_ONLINE+'online_metadata.yml', 'r') as file:
                 data = yaml.safe_load(file)
-                count = 0
-                for entry in data:
-                    metadata.write(f'{entry["title"]}\t{entry["cate"]}\t{entry["author"]}\t{entry["platform"]}\t{entry["date"]}\t{entry["link"]}\t{entry["note"]}\n')
-                    blog_cate = entry['cate']
-                    blog_cate_path = os.path.join(BLOG_CPP, blog_cate)
-                    if not os.path.exists(blog_cate_path):
-                        os.makedirs(blog_cate_path)
+                if data is not None: 
+                    count = 0
+                    for entry in data:
+                        metadata.write(f'{entry["title"]}\t{entry["cate"]}\t{entry["author"]}\t{entry["platform"]}\t{entry["date"]}\t{entry["link"]}\t{entry["note"]}\n')
+                        blog_cate = entry['cate']
+                        blog_cate_path = os.path.join(BLOG_CPP, blog_cate)
+                        if not os.path.exists(blog_cate_path):
+                            os.makedirs(blog_cate_path)
 
-                        with open(os.path.join(blog_cate_path, "CMakeLists.txt"), "w") as cmake_file:
-                            cmake_file.write(f'file(GLOB blogfile "*.cpp")\n')
-                            cmake_file.write(f'add_library(blog_{blog_cate} STATIC ${{blogfile}})\n')
+                            with open(os.path.join(blog_cate_path, "CMakeLists.txt"), "w") as cmake_file:
+                                cmake_file.write(f'file(GLOB blogfile "*.cpp")\n')
+                                cmake_file.write(f'add_library(blog_{replace_invalid_chars(blog_cate)} STATIC ${{blogfile}})\n')
 
-                        # Update the main CMakeLists.txt
-                        with open(cmake_src, "a") as cmake_file:
-                            cmake_file.write(f'add_subdirectory(./_blog/{blog_cate})\n')
+                            # Update the main CMakeLists.txt
+                            with open(cmake_src, "a") as cmake_file:
+                                cmake_file.write(f'add_subdirectory(./_blog/{replace_invalid_chars(blog_cate)})\n')
 
-                    count += 1
-                    cpp_file = os.path.join(blog_cate_path, f"reprint_{blog_cate}_{count}.cpp")
-                    with open(cpp_file, "w") as cpp:
-                        cpp.write('#include "blog.h"\n\n')
-                        cpp.write(f"struct blog blog_reprint_{blog_cate}_{count} = {{\n")
-                        cpp.write(f'    target_file_name: "{entry["note"]}",\n')
-                        cpp.write(f'    title: "{entry["title"]}",\n')
-                        cpp.write(f'    date: "{entry["date"]}",\n')
-                        cpp.write(f'    category: "{entry["cate"]}",\n')
-                        cpp.write(f'    author: "{entry["author"]}",\n')
-                        cpp.write(f'    type: "online",\n')
-                        if entry['note'] is not None and entry['note'] != "none":
-                            cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}, <a class=\\"html\\" href=\\"./blog/_/{entry["note"]}.html\\">note</a>",\n')
-                        else:
-                            cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}",\n')
-                        cpp.write(f'    redirect: "{entry["link"]}",\n')
-                        cpp.write("};\n")
+                        count += 1
+                        cpp_file = os.path.join(blog_cate_path, f"reprint_{blog_cate}_{count}.cpp")
+                        with open(cpp_file, "w") as cpp:
+                            cpp.write('#include "blog.h"\n\n')
+                            cpp.write(f"struct blog blog_reprint_{replace_invalid_chars(blog_cate)}_{count} = {{\n")
+                            cpp.write(f'    target_file_name: "{entry["note"]}",\n')
+                            cpp.write(f'    title: "{entry["title"]}",\n')
+                            cpp.write(f'    date: "{entry["date"]}",\n')
+                            cpp.write(f'    category: "{entry["cate"]}",\n')
+                            cpp.write(f'    author: "{entry["author"]}",\n')
+                            cpp.write(f'    type: "online",\n')
+                            if entry['note'] is not None and entry['note'] != "none":
+                                cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}, <a class=\\"html\\" href=\\"./blog/_/{entry["note"]}.html\\">note</a>",\n')
+                            else:
+                                cpp.write(f'    ps: "@{entry["author"]}-{entry["platform"]}",\n')
+                            cpp.write(f'    redirect: "{entry["link"]}",\n')
+                            cpp.write("};\n")
 
-                    print(f"Created {cpp_file}")
+                        print_info(f"Created {cpp_file}")
 
         # Append to the CMakeLists.txt
         with open(cmake_src, "a") as cmake_file:
@@ -179,7 +193,7 @@ if __name__ == '__main__':
             if os.path.isdir(blog_cate_path):
                 blog_cate_only = os.path.basename(blog_cate_path)
                 with open(cmake_src, "a") as cmake_file:
-                    cmake_file.write(f'target_link_libraries(generator blog_{blog_cate_only})\n')
+                    cmake_file.write(f'target_link_libraries(generator blog_{replace_invalid_chars(blog_cate_only)})\n')
 
         # Automatically update generator.cpp
         input_file = "./src/generator.cpp"

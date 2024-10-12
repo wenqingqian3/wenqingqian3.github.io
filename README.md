@@ -30,6 +30,5 @@
 
 ### usage
 ```shell
-cd _kernel
-python run.py -c all
+python run.py
 ```
