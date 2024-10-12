@@ -5,8 +5,10 @@
 ```txt
 |- _kernel : Generator source file, partially auto-generated
 |- render : Web page render, including css, js, icon, etc.
-|- user \- blog : Markdown source files must be split into several categories, and the category written in the markdown must match the directory name
+|- user \- blog : Markdown source files must be split into several categories
+                  and the category written in the markdown must match the directory name
         |- _blog_history : Auto-generated files in webroot/_blog/*
+        |- blog_online : Reprint and note
 |- webroot \- index.html (homepage) manually created
            |- blog.html auto-generated
            |- assets :     \- resume.pdf
@@ -24,6 +26,7 @@
 1. Multi-category support: `category: cate1 cate2`
    You can specify multiple categories for a post, but the source file must be placed in a specific category directory, which also contains the images. The directory name will be used as the primary category name, and a page will be generated only in this category.
    Sub-categories will be used to generate links in the blog index page.
+2. Reprint support: You can reprint articles, and include your own notes alongside them. 
 
 ### usage
 ```shell
