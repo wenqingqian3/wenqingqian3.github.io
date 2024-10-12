@@ -55,7 +55,7 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 		outfile << blog_index_head;
 		
 		for(auto& cate : categories){
-			outfile << "<section><h1>" + cate + "</h1><ul>\n";
+			outfile << "<section><h1>" + convert_udl_to_space(cate) + "</h1><ul>\n";
 			for(auto& blog : blogvec){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){
@@ -89,7 +89,7 @@ void generate_blog_index(vector<blog>& blogvec, bool if_gen_blog_index_toc){
 		// build index markdown then markdown-to-html to get html, toc, tocmap
 		std::stringstream index_md;
 		for(auto& cate : categories){
-			index_md << "# " << cate << '\n';
+			index_md << "# " << convert_udl_to_space(cate) << '\n';
 			for(auto& blog : blogvec){
 				for(auto& mcate : blog.categories){
 					if(mcate == cate){

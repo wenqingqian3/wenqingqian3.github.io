@@ -16,3 +16,11 @@ inline std::string rtrim(const std::string& str) {
 inline std::string trim(const std::string& str) {
 	return rtrim(ltrim(str));
 }
+
+inline std::string convert_udl_to_space(const std::string& str) {
+    std::string res = str;
+    for(auto& c: res){
+        if(c == '_') c = ' ';
+    }
+    return res;
+}
