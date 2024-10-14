@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +7,7 @@
 	<link rel="icon" href="../render/icon/appletree.png" type="image/png">
 	<link href="../render/fonts.css" rel="stylesheet">
 	<link href="../render/toc.css" rel="stylesheet">
+	<link href="../render/search.css" rel="stylesheet">
 	<link href="../render/style_base.css" rel="stylesheet">
 	<link href="../render/style_english.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,16 +18,61 @@
 	<link href="../render/common.css" rel="stylesheet">
 </head>
 <body>
+<!-- theme inspired by fontawesome -->
+<div class="search-modal" id="searchModal">
+    <div class="search-container">
+        <div class="search-input">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search" id="searchInput">
+            <div class="score-threshold">
+                <label for="scoreThreshold">ScoreThreshold: <span id="scoreValue">10</span></label>
+                <input type="range" id="scoreThreshold" min="0" max="100" value="10" step="1">
+            </div>
+        </div>
 
-<div class="container"><aside class="toc-container"><nav class="toc-sidebar"><ul><li><a class="toch1" href="#cate1">cate1</a></li><li><a class="toch1" href="#cate2">cate2</a></li><li><a class="toch1" href="#cate4">cate4</a></li><li><a class="toch1" href="#cate5">cate5</a></li><li><a class="toch1" href="#multi cate">multi cate</a></li></ul></nav></aside>
+        <div class="recent-searches">
+            No recent searches
+        </div>
+        <div class="search-footer">
+            <div>
+                <span>Esc to close</span>
+            </div>
+            <div>
+                Search by
+                <img src="../render/icon/appletree.png"  class="algolia-logo">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"><aside class="toc-container"><nav class="toc-sidebar">
+
+<ul>
+<li><a class="toch1" href="#cate1">cate1</a>
+</li>
+<li><a class="toch1" href="#cate2">cate2</a>
+</li>
+<li><a class="toch1" href="#cate4">cate4</a>
+</li>
+<li><a class="toch1" href="#cate5">cate5</a>
+</li>
+<li><a class="toch1" href="#multi cate">multi cate</a>
+</li>
+</ul>
+
+</nav></aside>
+
 <main>
-	<header>Notes</header>
-	<div class='disp-toc-header'><p>This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository</p></div>
+<header>Notes</header>
+<div class='disp-toc-header'><p>This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository</p></div>
+
 <section>
 <h1 id="cate1">cate1</h1>
 <ul>
 <li><a class="online" href="https://zhuanlan.zhihu.com/">example1</a> ( 2024-10-11, online, @a1-知乎 )</li>
-<li><a class="html" href="../webroot/blog/cate1/s1.html">basic test</a> ( 2024-4-5, html )</li>
+<li><a class="html" href="blog/cate1/s1.html">basic test</a> ( 2024-4-5, html )</li>
 </ul>
 </section>
 <section>
@@ -36,9 +80,9 @@
 <ul>
 <li><a class="online" href="https://zhuanlan.zhihu.com/">example2</a> ( 2024-10-11, online, @a2-知乎, <a class="html" href="./blog/_/example2.html">note</a> )</li>
 <li><a class="assets" href="./assets/redirect-page/test.pdf">redirect test</a> ( 2024-4-7, pdf )</li>
-<p style="margin-bottom: 0em;color:#adafb1">test 2</p>
-<li><a class="html" href="../webroot/blog/cate2/language.html">language test</a> ( 2024-4-6, html )</li>
-<p style="margin-bottom: 0em;color:#adafb1">english</p>
+<p style="margin-bottom: 0em;color:#adafb1"> test 2</p>
+<li><a class="html" href="blog/cate2/language.html">language test</a> ( 2024-4-6, html )</li>
+<p style="margin-bottom: 0em;color:#adafb1"> english</p>
 </ul>
 </section>
 <section>
@@ -56,26 +100,89 @@
 <section>
 <h1 id="multi cate">multi cate</h1>
 <ul>
-<li><a class="html" href="../webroot/blog/cate1/s1.html">basic test</a> ( 2024-4-5, html )</li>
+<li><a class="html" href="blog/cate1/s1.html">basic test</a> ( 2024-4-5, html )</li>
 </ul>
 </section>
-
-		<div class="settings-menu">
-		<button class="settings-button">Control</button>
-		<div class="settings-options">
-			<a class="settings-button" href="./index.html">home</a>
-			<a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
-		</div>
-	</div>
+	
+<div class="settings-menu">
+    <button class="settings-button">Control</button>
+    <div class="settings-options">
+        <a class="settings-button" href="index.html">home</a>
+        <a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
+    </div>
+</div>
 </main>
 <div>
-<script>const toch3map = {}
-const toch2map = {}
+<script>
+const toch2map = {
+}
+const toch3map = {
+} 
 </script>
-<script src="../render/sidebar.js"></script> 
+<script> 
+const blogData = [
+{title: "basic test",
+date: "2024-4-5",
+type: "html",
+category: "cate1 multi_cate",
+url: "blog/cate1/s1.html",
+keywords: ["head1", "head1", "head1", "head2", "word", "head2", "word", "head2", "word", "end", "end", "end", "end", "end", "end", "end", "end", "end", "description", "latex", "`", "`", "list", "list1", "list2", "list3", "list4", "list3", "list3", "parallel"],
+},
+{title: "language test",
+date: "2024-4-6",
+type: "html",
+category: "cate2",
+url: "blog/cate2/language.html",
+keywords: ["language", "中文", "测试", "english", "english"],
+},
+{title: "redirect test",
+date: "2024-4-7",
+type: "pdf",
+category: "cate2",
+url: "assets/redirect-page/test.pdf",
+keywords: [],
+},
+{title: "example1",
+date: "2024-10-11",
+type: "online",
+category: "cate1",
+url: "https://zhuanlan.zhihu.com/",
+author: "a1",
+keywords: [],
+},
+{title: "example2",
+date: "2024-10-11",
+type: "online",
+category: "cate2",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+note: "blog/_/example2.html",
+keywords: ["dd", "Your", "note", "end", "test"],
+},
+{title: "example3",
+date: "2024-10-11",
+type: "online",
+category: "cate4",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+note: "blog/_/example2.html",
+keywords: ["dd", "Your", "note", "end", "test"],
+},
+{title: "测试用例测试用例测试用例测试用例测试用例",
+date: "2024-10-11",
+type: "online",
+category: "cate5",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+keywords: [],
+},
+ 
+];
+</script>
+<script src="../render/sidebar.js">   </script> 
 <script src="../render/common.js"></script> 
 <script src="../render/toc.js"></script> 
-
+<script src="../render/search.js"></script> 
 </body>
 </html>
 

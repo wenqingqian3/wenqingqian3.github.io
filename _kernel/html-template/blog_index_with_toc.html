@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Blog</title>
+	<link rel="icon" href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/icon/appletree.png" type="image/png">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/fonts.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/toc.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/search.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/style_base.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/style_english.css" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/sidebar.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/common.css" rel="stylesheet">
+</head>
+<body>
+<!-- theme inspired by fontawesome -->
+<div class="search-modal" id="searchModal">
+    <div class="search-container">
+        <div class="search-input">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search" id="searchInput">
+            <div class="score-threshold">
+                <label for="scoreThreshold">ScoreThreshold: <span id="scoreValue">10</span></label>
+                <input type="range" id="scoreThreshold" min="0" max="100" value="10" step="1">
+            </div>
+        </div>
+
+        <div class="recent-searches">
+            No recent searches
+        </div>
+        <div class="search-footer">
+            <div>
+                <span>Esc to close</span>
+            </div>
+            <div>
+                Search by
+                <img src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/icon/appletree.png"  class="algolia-logo">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"><aside class="toc-container"><nav class="toc-sidebar">
+
+{AUTOGEN:BLOG_INDEX_TOC}
+
+</nav></aside>
+
+<main>
+<header>{AUTOSET:BLOG_INDEX_HEADER}</header>
+<div class='disp-toc-header'><p>{AUTOSET:BLOG_INDEX_DESCRIPTION}</p></div>
+
+{AUTOGEN:BLOG_INDEX_CONTENT}
+	
+<div class="settings-menu">
+    <button class="settings-button">Control</button>
+    <div class="settings-options">
+        <a class="settings-button" href="{AUTOGEN:RELATIVE_PATH_TO_HOME}">home</a>
+        <a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
+    </div>
+</div>
+</main>
+<div>
+<script>
+{AUTOGEN:BLOG_INDEX_TOC_MAP} 
+</script>
+<script> 
+const blogData = [
+{AUTOGEN:BLOG_SEARCH_METADATA} 
+];
+</script>
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/sidebar.js">   </script> 
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/common.js"></script> 
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/toc.js"></script> 
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/search.js"></script> 
+</body>
+</html>
+

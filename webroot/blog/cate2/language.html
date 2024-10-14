@@ -9,6 +9,7 @@
 	<link rel="icon" href="../../../render/icon/appletree.png" type="image/png">
 	<link href="../../../render/fonts.css" rel="stylesheet">
 	<link href="../../../render/blog.css" rel="stylesheet">
+	<link href="../../../render/search.css" rel="stylesheet">
 	<link href="../../../render/style_base.css" rel="stylesheet">
 	<link href="../../../render/style_chinese.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,9 +22,53 @@
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-<div class="container"><aside class="toc-container"><nav class="toc-sidebar"><ul><li><a class="toch1" href="#language">language</a></li><li><a class="toch1" href="#english">english</a></li></ul></nav></aside><main><div class='disp-toc-header'>
-<h1>language test</h1><h2 style="font-family: 'ZCOOL XiaoWei', regular;"> 2024-4-6</h2>
-<p>english</p></div><section>
+
+<!-- theme inspired by fontawesome -->
+<div class="search-modal" id="searchModal">
+    <div class="search-container">
+        <div class="search-input">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" placeholder="Search" id="searchInput">
+            <div class="score-threshold">
+                <label for="scoreThreshold">ScoreThreshold: <span id="scoreValue">10</span></label>
+                <input type="range" id="scoreThreshold" min="0" max="100" value="10" step="1">
+            </div>
+        </div>
+
+        <div class="recent-searches">
+            No recent searches
+        </div>
+        <div class="search-footer">
+            <div>
+                <span>Esc to close</span>
+            </div>
+            <div>
+                Search by
+                <img src="../../../render/icon/appletree.png"  class="algolia-logo">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container"><aside class="toc-container"><nav class="toc-sidebar">
+<ul>
+<li><a class="toch1" href="#language">language</a>
+</li>
+<li><a class="toch1" href="#english">english</a>
+</li>
+</ul>
+</nav></aside><main>
+
+<div class='disp-toc-header'>
+<h1>language test</h1>
+<h2 style="font-family: 'ZCOOL XiaoWei', regular;">2024-4-6</h2>
+<p>english</p>
+</div>
+
+<section>
 <h1 id="language">language</h1>
 <p>中文测试 english</p>
 </section>
@@ -32,22 +77,88 @@
 </section>
 
 	
-	<div class="settings-menu">
-		<button class="settings-button">Control</button>
-		<div class="settings-options">
-			<a class="settings-button" href="../../index.html">home</a>
-			<a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
-			<a class="settings-button" href="../../blog.html">back to blog</a>
-		</div>
-	</div>
+<div class="settings-menu">
+    <button class="settings-button">Control</button>
+    <div class="settings-options">
+        <a class="settings-button" href="../../index.html">home</a>
+        <a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
+        <a class="settings-button" href="../../blog.html">back to blog</a>
+    </div>
+</div>
 </main>
 </div>
-<script>const toch3map = {}
-const toch2map = {}
+
+<script> 
+const toch2map = {
+}
+const toch3map = {
+} 
+</script>
+
+<script> 
+const blogData = [
+{title: "basic test",
+date: "2024-4-5",
+type: "html",
+category: "cate1 multi_cate",
+url: "../cate1/s1.html",
+keywords: ["head1", "head1", "head1", "head2", "word", "head2", "word", "head2", "word", "end", "end", "end", "end", "end", "end", "end", "end", "end", "description", "latex", "`", "`", "list", "list1", "list2", "list3", "list4", "list3", "list3", "parallel"],
+},
+{title: "language test",
+date: "2024-4-6",
+type: "html",
+category: "cate2",
+url: "../cate2/language.html",
+keywords: ["language", "中文", "测试", "english", "english"],
+},
+{title: "redirect test",
+date: "2024-4-7",
+type: "pdf",
+category: "cate2",
+url: "../../assets/redirect-page/test.pdf",
+keywords: [],
+},
+{title: "example1",
+date: "2024-10-11",
+type: "online",
+category: "cate1",
+url: "https://zhuanlan.zhihu.com/",
+author: "a1",
+keywords: [],
+},
+{title: "example2",
+date: "2024-10-11",
+type: "online",
+category: "cate2",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+note: "../_/example2.html",
+keywords: ["dd", "Your", "note", "end", "test"],
+},
+{title: "example3",
+date: "2024-10-11",
+type: "online",
+category: "cate4",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+note: "../_/example2.html",
+keywords: ["dd", "Your", "note", "end", "test"],
+},
+{title: "测试用例测试用例测试用例测试用例测试用例",
+date: "2024-10-11",
+type: "online",
+category: "cate5",
+url: "https://zhuanlan.zhihu.com/",
+author: "a2",
+keywords: [],
+},
+ 
+];
 </script>
 <script src="../../../render/sidebar.js"></script> 
 <script src="../../../render/common.js"></script> 
 <script src="../../../render/toc.js"></script> 
+<script src="../../../render/search.js"></script> 
 
 </body>
 </html>

@@ -5,16 +5,16 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>About</title>
-	<link rel="icon" href="../../render/icon/appletree.png" type="image/png">
-	<link href="../../render/fonts.css" rel="stylesheet">
-	<link href="../../render/style_base.css" rel="stylesheet">
-	<link href="../../render/style_english.css" rel="stylesheet">
+	<link rel="icon" href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/icon/appletree.png" type="image/png">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/fonts.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/style_base.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/style_english.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link href="../../render/sidebar.css" rel="stylesheet">
-	<link href="../../render/common.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/sidebar.css" rel="stylesheet">
+	<link href="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/common.css" rel="stylesheet">
 	</head>
 	<body>
 	<main>
@@ -22,33 +22,20 @@
 	   Download
 	</header>
 
-    <section>
-	<h1>txt</h1>
-	<ul>
-		<li><a href="download/txt/test.txt" download>test.txt</a></li>
-	</ul>
-</section>
-<section>
-	<h1>pdf</h1>
-	<ul>
-		<li><a href="download/pdf/resume.pdf" download>resume.pdf</a></li>
-		<li><a href="download/pdf/test.pdf" download>test.pdf</a></li>
-	</ul>
-</section>
-
+    {AUTOGEN:DOWNLOAD_CONTENT}
 
 	<div class="settings-menu">
 		<button class="settings-button">Control</button>
 		<div class="settings-options">
-			<a class="settings-button" href="../index.html">home</a>
+			<a class="settings-button" href="{AUTOGEN:RELATIVE_PATH_TO_HOME}">home</a>
 			<a style="color: var(--basic-black);">width <button id="adjustWidth-add" class="settings-inner-button">+</button> / <button id="adjustWidth-sub" class="settings-inner-button">-</button></a>
 		</div>
 	</div>
 </main>
 
 
-<script src="../../render/sidebar.js"></script> 
-<script src="../../render/common.js"></script> 
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/sidebar.js"></script> 
+<script src="{AUTOGEN:RELATIVE_PATH_TO_RENDER}/common.js"></script> 
 
 </body>
 </html>

@@ -1,0 +1,66 @@
+# 跟路径相关信息和一些控制标志(flag)使用了大写, 其他信息使用小写
+
+[HOME]
+
+name = 'Your Name'
+
+about_me = [
+    "I am ...",
+    "Currently, ..."
+]
+about_website = [
+    "This Website is used to ...",
+    "..."
+]
+
+email = "none"
+# only github id
+github = "none"
+# only x id too
+x = "none"
+
+# change this will cause error currently
+PATH = "./webroot/index.html"
+
+[RESUME]
+
+PATH = './webroot/assets/resume.pdf'
+
+[DOWNLOAD]
+
+PATH.INDEX = "./webroot/assets/download.html"
+PATH.RESOURCE = "./webroot/assets/download/"
+
+[BLOG]
+# where put the source file of markdown
+PATH.MD = "./user/blog/"
+# where put the source file of reprint including a list and notes
+PATH.ONLINE = "./user/blog_online/"
+# where put the target web page
+PATH.WEB = "./webroot/blog/"
+# where put the blog index page
+PATH.INDEX = "./webroot/blog.html"
+# where put the redirect file 
+# change this may cause error
+PATH.REDIRECT = "./webroot/assets/redirect-page/"
+
+
+
+# blog index page style:
+# header      |  toc
+# description |
+# content     |
+
+# if generate toc in blog index page
+INDEX.TOC = true
+# blog index page header
+INDEX.header = "Notes"
+# blog index page description
+INDEX.description = "This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository"
+
+[OTHER]
+
+PATH = './webroot/assets/other.html'
+
+[COMPILE]
+DEBUG = false

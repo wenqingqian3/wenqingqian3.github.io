@@ -1,13 +1,5 @@
-import subprocess
-import argparse
+from _kernel.main import main
+from _kernel.util import Util
 
-parser = argparse.ArgumentParser()
-parser.add_argument('-c', '--command', type=str, help='command', required=False, default='update')
-parser.add_argument('-bit', '--blog_index_toc', type=str, help='blog_index_toc', required=False, default='on')
-args = parser.parse_args()
-
-print(args)
-
-
-subprocess.run(["python3","./run.py"], cwd="webroot")
-subprocess.run(["python3","./run.py", "-c", f"{args.command}", "-bit", f"{args.blog_index_toc}"], cwd="_kernel")
+if __name__ == "__main__":
+    main("only_mod_here.toml")
