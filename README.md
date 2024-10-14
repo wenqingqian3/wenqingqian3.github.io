@@ -64,3 +64,6 @@
 # minimal-page/
 python run.py
 ```
+### TODO & Notice
+1. blog_history is not support now
+2. auto clean generated file
