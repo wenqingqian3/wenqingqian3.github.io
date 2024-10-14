@@ -1,4 +1,4 @@
-# 跟路径相关信息和一些控制标志(flag)使用了大写, 其他信息使用小写
+# Root path-related information and control flags are in uppercase, other info in lowercase
 
 [HOME]
 
@@ -14,12 +14,12 @@ about_website = [
 ]
 
 email = "none"
-# only github id
+# Only GitHub username
 github = "none"
-# only x id too
+# Only X (formerly Twitter) username
 x = "none"
 
-# change this will cause error currently
+# Changing this will currently cause an error
 PATH = "./webroot/index.html"
 
 [RESUME]
@@ -32,35 +32,34 @@ PATH.INDEX = "./webroot/assets/download.html"
 PATH.RESOURCE = "./webroot/assets/download/"
 
 [BLOG]
-# where put the source file of markdown
+# Where to place the markdown source files
 PATH.MD = "./user/blog/"
-# where put the source file of reprint including a list and notes
+# Where to place the source files for reprints, including lists and notes
 PATH.ONLINE = "./user/blog_online/"
-# where put the target web page
+# Where to store the generated web pages
 PATH.WEB = "./webroot/blog/"
-# where put the blog index page
+# Where to store the blog index page
 PATH.INDEX = "./webroot/blog.html"
-# where put the redirect file 
-# change this may cause error
+# Where to store the redirect files
+# Changing this may cause errors
 PATH.REDIRECT = "./webroot/assets/redirect-page/"
 
-
-
-# blog index page style:
+# Blog index page layout:
 # header      |  toc
 # description |
 # content     |
 
-# if generate toc in blog index page
+# Whether to generate a table of contents (toc) in the blog index page
 INDEX.TOC = true
-# blog index page header
+# Blog index page header text
 INDEX.header = "Notes"
-# blog index page description
-INDEX.description = "This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository"
+# Blog index page description
+INDEX.description = "This page and the following HTML-type web pages are all built by the automatic generator in this repository. The corresponding markdown source files of these HTML-type web pages can be found in the repository."
 
 [OTHER]
 
 PATH = './webroot/assets/other.html'
 
 [COMPILE]
+# Toggle debug mode
 DEBUG = false
