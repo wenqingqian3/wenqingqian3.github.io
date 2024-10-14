@@ -48,23 +48,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
     });
 
     function performSearch() {
-        const query = searchInput.value.toLowerCase();
+        const query = searchInput.value.toLowerCase().trim();
         if (query.length < 2) {
             recentSearches.innerHTML = 'No recent searches';
             return;
         }
 
+        const queryWords = query.split(/\s+/);
+    
         const scoredResults = blogData.map(blog => {
             let score = 0;
-            if (blog.title.toLowerCase().includes(query)) score += 20;
-            if (blog.category.toLowerCase().includes(query)) score += 10;
-            blog.keywords.forEach(keyword => {
-                if (keyword.toLowerCase().includes(query)) score += 1;
+            queryWords.forEach(word => {
+                if (blog.title.toLowerCase().includes(word)) score += 20;
+                if (blog.category.toLowerCase().includes(word)) score += 10;
+                blog.keywords.forEach(keyword => {
+                    if (keyword.toLowerCase().includes(word)) score += 1;
+                });
             });
             return { ...blog, score };
         }).filter(blog => blog.score >= scoreThreshold)
           .sort((a, b) => b.score - a.score);
-
+    
         displayResults(scoredResults);
     }
 
