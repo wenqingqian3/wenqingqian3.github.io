@@ -69,3 +69,4 @@ python run.py
 2. auto clean generated file
 3. Implement a command to "adjust the score of keywords based on file size"
 4. Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
+5. link support
