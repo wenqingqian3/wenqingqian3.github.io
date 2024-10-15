@@ -20,6 +20,7 @@ class Engine:
         self.blogs : list[Blog] = []
 
     def start(self):
+        self._quick_fix()
 
         self._gen_home_page()
         self._gen_download_page()
@@ -416,3 +417,8 @@ class Engine:
 
                 new_content += '\t</ul>\n</section>\n'
         return new_content
+    
+    def _quick_fix(self):
+
+        os.makedirs(os.path.join(self.BLOGWEB, '_/'))
+
