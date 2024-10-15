@@ -25,3 +25,9 @@ p{
 	line-height: 1.4; /* 调整行间距 */
 	font-family: monospace;
 }
+
+li.blog_list {
+    letter-spacing: 0.8px;
+	line-height: 1.4; 
+	font-family: monospace;
+}

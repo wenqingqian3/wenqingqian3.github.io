@@ -61,7 +61,13 @@ class Util:
     def is_none(a):
         return a == "none" or a is None or a.strip() == ""
     @staticmethod
+    def replace_chinese_punctuation(text):
+        text = text.replace('，', ', ').replace('。', '. ').replace('：', ': ')
+        return text
+    @staticmethod
     def markdown_to_html(markdown, args):
+        markdown = Util.replace_chinese_punctuation(markdown)
+
         toc_name = set()
         h1v = []
         html = []
@@ -212,7 +218,7 @@ class Util:
 
                 list_item = re.sub(r"\$(.*?)\$", r"\(\1\)", list_item)
                 list_item = re.sub(r"`(.*?)`", r"<code>\1</code>", list_item)
-                section.append(f"<li>{list_item}</li>")
+                section.append(f'<li class="blog_list">{list_item}</li>')
                 last_indent_level = current_indent_level
 
             else:
