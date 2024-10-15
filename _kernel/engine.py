@@ -419,6 +419,7 @@ class Engine:
         return new_content
     
     def _quick_fix(self):
-
-        os.makedirs(os.path.join(self.BLOGWEB, '_/'))
+        blognote = os.path.join(self.BLOGWEB, '_/')
+        if not os.path.exists(blognote):
+            os.makedirs(blognote)
 
