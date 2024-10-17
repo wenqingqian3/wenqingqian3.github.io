@@ -87,6 +87,7 @@ class Util:
             "code": [r"`(.*?)`", r"<code>\1</code>"],
             "block_formula": [r"^\s?\$\$(.*?)\$\$\s?$", r"<div>\[ \1 \]</div>"],
             "inline_formula": [r"\$(.*?)\$", r"\(\1\)"],
+            "link" : [r"\[(.*?)\]\((.*?)\)", r'<a class="online" href="\2">\1</a>'],
         }
 
         def general_sub(item, **kargs):
