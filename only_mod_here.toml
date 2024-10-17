@@ -23,6 +23,7 @@ x = "none"
 PATH = "./webroot/index.html"
 
 [RESUME]
+# If you want to undisplay this, goto _kernel/html-template/index.html
 
 PATH = './webroot/assets/resume.pdf'
 
