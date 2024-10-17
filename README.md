@@ -50,7 +50,7 @@
 1. #, ##, ### Three levels of headings
 2. `-` List
 3. `![size1,size2...](link1,link2...)(description(Optional))` Multiple images in one line, where `size` represents the percentage of the image’s display width in a line
-4. `$eq$` Inline formula, `$$eq$$` Block formula, \`code\` Inline code
+4. `$eq$` Inline formula, `$$eq$$` Block formula (support multi-line), \`code\` Inline code
 
 ### Features
 1. Multi-category support: `category: cate1 cate2`
@@ -65,11 +65,11 @@
 python run.py
 ```
 ### TODO & Notice
-1. blog_history is not support now
-2. auto clean generated file
-3. Implement a command to "adjust the score of keywords based on file size"
-4. Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
-5. link support
-6. reference support
-7. Minor (new type): Open an embedded window to display a Minor article within the current page.
-8. rewrite the format modified markdown to source
+1. [  %]blog_history is not support now
+2. [  %]auto clean generated file
+3. [  %]Implement a command to "adjust the score of keywords based on file size"
+4. [ %%]Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
+5. [%%%]link support
+6. [  %]reference support
+7. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
+8. [  %]rewrite the format modified markdown to source

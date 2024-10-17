@@ -128,6 +128,15 @@ class Util:
 
             if not re.match(r"^\$\$", line) and in_math_block:
                 math_block.append(line)
+
+            elif re.match(r"^\$\$", line) and not in_math_block:
+                in_math_block = True
+
+            elif re.match(r"^\$\$", line) and in_math_block:
+                section.append("<div>\\[" + "\\]\\[".join(math_block) + "\\]</div>")
+                math_block = []
+                in_math_block = False
+
             elif re.match(r"^# .+", line):
                 if in_section:
                     section.append("</section>")
@@ -193,14 +202,6 @@ class Util:
                     section.append("<p></p>")
                     if desc:
                         section.append(f"<figure><figcaption>{desc}</figcaption></figure>")
-
-            elif re.match(r"^\$\$", line) and not in_math_block:
-                in_math_block = True
-            elif re.match(r"^\$\$", line) and in_math_block:
-                section.append("<div>\\[\n" + "\n".join(math_block) + "\\]</div>")
-                math_block = []
-                in_math_block = False
-
             elif list_item_regex.search(line):
                 indent = match.group(1)
                 list_item = match.group(2)
