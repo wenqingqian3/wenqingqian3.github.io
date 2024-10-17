@@ -58,6 +58,7 @@
    Sub-categories will be used to generate links in the blog index page.
 2. Reprint support: You can reprint articles, and include your own notes alongside them. 
 3. Support search `command + K`
+4. Support link `[name](link)`, link must match http(s)://*
 
 ### usage
 ```shell
@@ -70,7 +71,6 @@ python run.py
 3. [  %]Implement a command to "adjust the score of keywords based on file size"
 4. [ %%]Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
 5. [%%%]link support
-6. [  %]reference support
-7. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
-8. [  %]rewrite the format modified markdown to source
-9. [ %%]support ordered list
+6. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
+7. [  %]rewrite the format modified markdown to source
+8. [ %%]support ordered list
