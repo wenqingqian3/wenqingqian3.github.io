@@ -1,6 +1,6 @@
 from colorama import init, Fore
 import re, os
-
+import traceback
 
 init(autoreset=True)
 
@@ -83,6 +83,24 @@ class Util:
         last_indent_level = -1
         indent_count = [0] * 100
 
+        _general_pattern = {
+            "code": [r"`(.*?)`", r"<code>\1</code>"],
+            "block_formula": [r"^\s?\$\$(.*?)\$\$\s?$", r"<div>\[ \1 \]</div>"],
+            "inline_formula": [r"\$(.*?)\$", r"\(\1\)"],
+        }
+
+        def general_sub(item, **kargs):
+            for key in kargs:
+                if key not in _general_pattern:
+                    stack = traceback.extract_stack()[-2]
+                    Util.print_error(f"invaild name {key} for disable the genernal_pattern :: {stack.filename}-{stack.lineno}")
+            for key, (pattern, replacement) in _general_pattern.items():
+                if kargs.get(key) is False:
+                    continue
+                item = re.sub(pattern, replacement, item)
+            
+            return item
+
         lines = markdown.split('\n')
 
         for line in lines:
@@ -102,6 +120,8 @@ class Util:
             if skip_metadata:
                 continue
 
+            line = line.rstrip()
+
             match = list_item_regex.search(line)
 
             if line and in_list and not list_item_regex.search(line):
@@ -110,9 +130,7 @@ class Util:
 
                 if len(indent) == last_indent_level + 2:
                     item = match[2]
-                    item = re.sub(r"^\s?\$\$(.*?)\$\$\s?$", r"<div>\[ \1 \]</div>", item)
-                    item = re.sub(r"\$(.*?)\$", r"\(\1\)", item)
-                    item = re.sub(r"`(.*?)`", r"<code>\1</code>", item)
+                    item = general_sub(item)
                     if item.startswith("!@#$"):
                         section.append(f"<p style=\"margin-bottom: 0em;color:#adafb1\">{item[4:]}</p>")
                     else:
@@ -126,13 +144,13 @@ class Util:
                     in_list = False
                     last_indent_level = -1
 
-            if not re.match(r"^\$\$", line) and in_math_block:
+            if not re.match(r"^\$\$$", line) and in_math_block:
                 math_block.append(line)
 
-            elif re.match(r"^\$\$", line) and not in_math_block:
+            elif re.match(r"^\$\$$", line) and not in_math_block:
                 in_math_block = True
 
-            elif re.match(r"^\$\$", line) and in_math_block:
+            elif re.match(r"^\$\$$", line) and in_math_block:
                 section.append("<div>\\[" + "\\]\\[".join(math_block) + "\\]</div>")
                 math_block = []
                 in_math_block = False
@@ -217,17 +235,14 @@ class Util:
                             section.append("</ul>")
                             indent_count[i] -= 1
 
-                list_item = re.sub(r"\$(.*?)\$", r"\(\1\)", list_item)
-                list_item = re.sub(r"`(.*?)`", r"<code>\1</code>", list_item)
+                list_item = general_sub(list_item, block_formula=False)
                 section.append(f'<li class="blog_list">{list_item}</li>')
                 last_indent_level = current_indent_level
 
             else:
                 if line:
                     processed_line = line
-                    processed_line = re.sub(r"\$\$(.*?)\$\$", r"<div>\[ \1 \]</div>", processed_line)
-                    processed_line = re.sub(r"\$(.*?)\$", r"\(\1\)", processed_line)
-                    processed_line = re.sub(r"`(.*?)`", r"<code>\1</code>", processed_line)
+                    processed_line = general_sub(processed_line)
                     section.append(f"<p>{processed_line}</p>")
 
         if in_list:

@@ -73,3 +73,4 @@ python run.py
 6. [  %]reference support
 7. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
 8. [  %]rewrite the format modified markdown to source
+9. [ %%]support ordered list
