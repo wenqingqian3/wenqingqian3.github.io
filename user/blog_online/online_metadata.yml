@@ -1,31 +1,15 @@
-- title: example1
+- title: reprint test without note
   cate: cate1
-  author: a1
+  author: author
   platform: 知乎
   date: 2024-10-11
   link: https://zhuanlan.zhihu.com/
   note: none
 
-- title: example2
-  cate: cate2
-  author: a2
+- title: reprint test with note
+  cate: cate1
+  author: author
   platform: 知乎
   date: 2024-10-11
   link: https://zhuanlan.zhihu.com/
   note: example2
-
-- title: example3
-  cate: cate4
-  author: a2
-  platform: 知乎
-  date: 2024-10-11
-  link: https://zhuanlan.zhihu.com/
-  note: example2
-
-- title: 测试用例测试用例测试用例测试用例测试用例
-  cate: cate5
-  author: a2
-  platform: 知乎
-  date: 2024-10-11
-  link: https://zhuanlan.zhihu.com/
-  note: none

@@ -11,6 +11,8 @@ redirect:
 
 # language
 
-中文测试 english
+中文测试 
 
 # english
+
+english test

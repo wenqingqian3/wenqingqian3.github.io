@@ -11,7 +11,7 @@
 	<link href="../../../render/search.css" rel="stylesheet">
 	<link href="../../../render/style_base.css" rel="stylesheet">
 	<link href="../../../render/blog.css" rel="stylesheet">
-	<link href="../../../render/style_chinese.css" rel="stylesheet">
+	<link href="../../../render/style_english.css" rel="stylesheet">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
@@ -55,31 +55,25 @@
 
 <div class="container"><aside class="toc-container"><nav class="toc-sidebar">
 <ul>
-<li><a class="toch1" href="#head1-1">head1-1</a>
+<li><a class="toch1" href="#Image">Image</a>
+</li>
+<li><a class="toch1" href="#Formula">Formula</a>
 <ul>
-<li><a class="toch2" href="#head1-2">head1-2</a>
+<li><a class="toch2" href="#Inline Formula">Inline Formula</a>
+</li>
+<li><a class="toch2" href="#Block Formula">Block Formula</a>
 <ul>
-<li><a class="toch3" href="#head1-3">head1-3</a></li>
+<li><a class="toch3" href="#Single Line">Single Line</a></li>
+<li><a class="toch3" href="#Multi Line">Multi Line</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a class="toch1" href="#head2-1">head2-1</a>
-<ul>
-<li><a class="toch2" href="#head2-2">head2-2</a>
-<ul>
-<li><a class="toch3" href="#head2-3">head2-3</a></li>
-</ul>
+<li><a class="toch1" href="#Code">Code</a>
 </li>
-</ul>
+<li><a class="toch1" href="#List">List</a>
 </li>
-<li><a class="toch1" href="#pic">pic</a>
-</li>
-<li><a class="toch1" href="#latex">latex</a>
-</li>
-<li><a class="toch1" href="#code">code</a>
-</li>
-<li><a class="toch1" href="#list">list</a>
+<li><a class="toch1" href="#Blockquote">Blockquote</a>
 </li>
 </ul>
 </nav></aside><main>
@@ -91,91 +85,66 @@
 </div>
 
 <section>
-<h1 id="head1-1">head1-1</h1>
-<h2 id="head1-2">head1-2</h2>
-<h3 id="head1-3">head1-3</h3>
-</section>
-<section>
-<h1 id="head2-1">head2-1</h1>
-<p>word</p>
-<h2 id="head2-2">head2-2</h2>
-<p>word</p>
-<h3 id="head2-3">head2-3</h3>
-<p>word</p>
-</section>
-<section>
-<h1 id="pic">pic</h1>
-<p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 5%;" alt="err! email me if you need"><p></p>
-<p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 20%;" alt="err! email me if you need"><p></p>
+<h1 id="Image">Image</h1>
 <p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 50%;" alt="err! email me if you need"><p></p>
-<p></p><img src="../../../user/blog/cate1/./pic/end.png" style="display: block; margin: 0 auto;width: 100%;" alt="err! email me if you need"><p></p>
 <p></p>
 <img src="../../../user/blog/cate1/./pic/end.png" style="width: 40%; margin-left: 6%;" alt="err! email me if you need">
 <img src="../../../user/blog/cate1/./pic/end.png" style="width: 40%; margin-left: 6%;" alt="err! email me if you need">
 <p></p>
 <p></p>
-<img src="../../../user/blog/cate1/./pic/end.png" style="width: 20%; margin-left: 10%;" alt="err! email me if you need">
-<img src="../../../user/blog/cate1/./pic/end.png" style="width: 20%; margin-left: 10%;" alt="err! email me if you need">
-<img src="../../../user/blog/cate1/./pic/end.png" style="width: 20%; margin-left: 10%;" alt="err! email me if you need">
+<img src="../../../user/blog/cate1/./pic/end.png" style="width: 30%; margin-left: 2%;" alt="err! email me if you need">
+<img src="../../../user/blog/cate1/./pic/end.png" style="width: 30%; margin-left: 2%;" alt="err! email me if you need">
+<img src="../../../user/blog/cate1/./pic/end.png" style="width: 30%; margin-left: 2%;" alt="err! email me if you need">
 <p></p>
 <figure><figcaption>description</figcaption></figure>
 </section>
 <section>
-<h1 id="latex">latex</h1>
-<p>a + b = \(b+a\)</p>
-<div>\[a+b=b+a\]\[a+b=b+a\]</div>
+<h1 id="Formula">Formula</h1>
+<h2 id="Inline Formula">Inline Formula</h2>
+<p>The sum of two numbers: \(a + b = b + a\)</p>
+<h2 id="Block Formula">Block Formula</h2>
+<h3 id="Single Line">Single Line</h3>
 <p><div>\[  s = a  \]</div></p>
+<h3 id="Multi Line">Multi Line</h3>
+<div>\[x + y = y + x\]\[x^2 + y^2 = z^2\]</div>
 </section>
 <section>
-<h1 id="code">code</h1>
-<p><code>code</code></p>
+<h1 id="Code">Code</h1>
+<p>Inline <code>code snippet</code> example.</p>
 </section>
 <section>
-<h1 id="list">list</h1>
+<h1 id="List">List</h1>
 <ul>
-<li class="blog_list">list1</li>
+<li class="blog_list">First item</li>
 <ul>
-<li class="blog_list">list2</li>
+<li class="blog_list">Nested item</li>
 <ul>
-<li class="blog_list">list3</li>
+<li class="blog_list">Deeper item</li>
 <ul>
-<li class="blog_list">list4</li>
+<li class="blog_list">Deepest item</li>
 </ul>
-<li class="blog_list">\(\) s = a \(\)</li>
-<p style="margin-bottom: 0em;">list3-parallel</p>
-<p style="margin-bottom: 0em;"><div>\[  s = a  \]</div></p>
-<p style="margin-bottom: 0em;">\(abcd\)=abcd</p>
-<blockquote>sd
+<li class="blog_list">Another nested item</li>
+<p style="margin-bottom: 0em;"><div>\[  E = mc^2  \]</div></p>
+<p style="margin-bottom: 0em;">This is an inline formula \(f(x) = x^2\).</p>
+<blockquote>Blockquote reference inside list.
+</blockquote>
+<p style="margin-bottom: 0em;"><a class="online" href="https://github.com">Link to GitHub</a></p>
+</ul>
+</ul>
+</ul>
+</section>
+<section>
+<h1 id="Blockquote">Blockquote</h1>
+<blockquote>This is a single line blockquote.
+</blockquote>
+<blockquote>This is another blockquote.
+</blockquote>
+<blockquote>Multiple lines blockquote:
 <p></p>
- sfddf
-</blockquote>
-<blockquote>sd
-</blockquote>
-<p style="margin-bottom: 0em;">sd</p>
-<blockquote>sd
-</blockquote>
-<p style="margin-bottom: 0em;"><a class="online" href="https://github.com/wenqingqian/minimal-page">link</a></p>
-<blockquote>sd
-</blockquote>
-</ul>
-</ul>
-</ul>
-<blockquote>sd
+ Line 1
 <p></p>
- sdf
+ Line 2
 </blockquote>
-<blockquote>sd
- sdsdf
-<p></p>
- sdf
-<p></p>
- sdf
-</blockquote>
-<ul>
-<li class="blog_list">sd</li>
-<blockquote>sd
-</blockquote>
-</ul>
 </section>
 
 	
@@ -192,12 +161,12 @@
 
 <script> 
 const toch2map = {
-'head1-2' :{ h1: 'head1-1' },
-'head2-2' :{ h1: 'head2-1' },
+'Inline Formula' :{ h1: 'Formula' },
+'Block Formula' :{ h1: 'Formula' },
 }
 const toch3map = {
-'head1-3' :{ h1: 'head1-1', h2: 'head1-2' },
-'head2-3' :{ h1: 'head2-1', h2: 'head2-2' },
+'Single Line' :{ h1: 'Formula', h2: 'Block Formula' },
+'Multi Line' :{ h1: 'Formula', h2: 'Block Formula' },
 } 
 </script>
 
@@ -207,8 +176,8 @@ const blogData = [
 date: "2024-4-5",
 type: "html",
 category: "cate1 multi_cate",
-url: "../cate1/s1.html",
-keywords: ["head1", "head1", "head1", "head2", "word", "head2", "word", "head2", "word", "end", "end", "end", "end", "end", "end", "end", "end", "end", "description", "latex", "list", "list1", "list2", "list3", "list4", "list3", "parallel", "abcd", "abcd", "sd", "sfddf", "sd", "sd", "sd", "link", "https", "github", "wenqingqian", "minimal", "page", "sd", "sd", "sdf", "sd", "sdsdf", "sdf", "sdf", "sd", "sd"],
+url: "../cate1/basic.html",
+keywords: ["Image", "end", "end", "end", "end", "end", "end", "description", "Formula", "Inline", "Formula", "The", "sum", "numbers", "Block", "Formula", "Single", "Line", "Multi", "Line", "^", "^", "^", "Code", "Inline", "snippet", "List", "First", "item", "Nested", "item", "Deeper", "item", "Deepest", "item", "Another", "nested", "item", "E", "mc", "^", "This", "inline", "formula", "^", "Blockquote", "reference", "inside", "list", "Link", "GitHub", "https", "github", "Blockquote", "This", "single", "line", "blockquote", "This", "blockquote", "Multiple", "lines", "blockquote", "Line", "Line"],
 scale: 1,
 },
 {title: "language test",
@@ -216,7 +185,7 @@ date: "2024-4-6",
 type: "html",
 category: "cate2",
 url: "../cate2/language.html",
-keywords: ["language", "中文", "测试", "english", "english"],
+keywords: ["language", "中文", "测试", "english", "english", "test"],
 scale: 5,
 },
 {title: "redirect test",
@@ -227,42 +196,23 @@ url: "../../assets/redirect-page/test.pdf",
 keywords: [],
 scale: 5,
 },
-{title: "example1",
+{title: "reprint test without note",
 date: "2024-10-11",
 type: "online",
 category: "cate1",
 url: "https://zhuanlan.zhihu.com/",
-author: "a1",
+author: "author",
 keywords: [],
 scale: 5,
 },
-{title: "example2",
+{title: "reprint test with note",
 date: "2024-10-11",
 type: "online",
-category: "cate2",
+category: "cate1",
 url: "https://zhuanlan.zhihu.com/",
-author: "a2",
+author: "author",
 note: "../_/example2.html",
 keywords: ["dd", "Your", "note", "end", "test"],
-scale: 5,
-},
-{title: "example3",
-date: "2024-10-11",
-type: "online",
-category: "cate4",
-url: "https://zhuanlan.zhihu.com/",
-author: "a2",
-note: "../_/example2.html",
-keywords: ["dd", "Your", "note", "end", "test"],
-scale: 5,
-},
-{title: "测试用例测试用例测试用例测试用例测试用例",
-date: "2024-10-11",
-type: "online",
-category: "cate5",
-url: "https://zhuanlan.zhihu.com/",
-author: "a2",
-keywords: [],
 scale: 5,
 },
  

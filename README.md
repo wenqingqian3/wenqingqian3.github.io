@@ -70,10 +70,10 @@ python run.py
 ```
 ### TODO & Notice
 
-```
-1. [  %]blog_history is not support now
-2. [  %]auto clean generated file
-4. [  %]rewrite the format modified markdown to source
-5. [ %%]support ordered list
+```txt
+[  %]blog_history is not support now
+[%%%]auto clean generated file 
+[  %]rewrite the format modified markdown to source
+[ %%]support ordered list (hard)
 
 ```
