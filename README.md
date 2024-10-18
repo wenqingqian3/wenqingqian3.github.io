@@ -53,11 +53,12 @@
 4. `$eq$` Inline formula, `$$eq$$` Block formula (support multi-line), \`code\` Inline code
 
 ### Features
-1. Multi-category support: `category: cate1 cate2`
+1. Multi-category support: `category: cate1 cate2` 
    You can specify multiple categories for a post, but the source file must be placed in a specific category directory, which also contains the images. The directory name will be used as the primary category name, and a page will be generated only in this category.
    Sub-categories will be used to generate links in the blog index page.
 2. Reprint support: You can reprint articles, and include your own notes alongside them. 
-3. Support search `command + K`
+3. Support search `command + K`, search engine will calculate the relevance scores for all blogs, and you can easily adjust the threshold to en/disable some of them.
+   - scale the score of content according to file size
 4. Support link `[name](link)`, link must match http(s)://*
 
 ### usage
@@ -66,11 +67,10 @@
 python run.py
 ```
 ### TODO & Notice
+
 1. [  %]blog_history is not support now
 2. [  %]auto clean generated file
-3. [  %]Implement a command to "adjust the score of keywords based on file size"
-4. [ %%]Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
-5. [%%%]link support
-6. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
-7. [  %]rewrite the format modified markdown to source
-8. [ %%]support ordered list
+3. [ %%]Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
+4. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
+5. [  %]rewrite the format modified markdown to source
+6. [ %%]support ordered list

@@ -22,6 +22,8 @@ class Blog:
 
         self.date_year, self.date_month, self.date_day = self._split_date()
         self.content = None
+        self._keywords = None
+        self.scale   = 1
 
     def generate(self):
         with open(self.target_file_path, 'r') as f:
@@ -32,6 +34,9 @@ class Blog:
 
     @property
     def keywords(self):
+        if self._keywords is not None:
+            return self._keywords
+        
         def read_file(file_path):
             with open(file_path, 'r', encoding='utf-8') as file:
                 content = file.read()
@@ -57,10 +62,12 @@ class Blog:
             content = remove_header(content)
             stopwords = load_stopwords(stopwords_file)
             vocabulary = generate_vocabulary(content, stopwords)
+            self.scale = len(vocabulary)
             formatted_vocabulary = format_vocabulary(vocabulary)
             return formatted_vocabulary
         
-        return process_file(self.target_file_path, "./_kernel/stopwords.txt")
+        self._keywords = process_file(self.target_file_path, "./_kernel/stopwords.txt")
+        return self._keywords
     
     def _split_date(self):
         year, month, day = map(int, self.date.split('-'))

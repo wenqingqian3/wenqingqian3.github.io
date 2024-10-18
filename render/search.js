@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 if (blog.title.toLowerCase().includes(word)) score += 20;
                 if (blog.category.toLowerCase().includes(word)) score += 10;
                 blog.keywords.forEach(keyword => {
-                    if (keyword.toLowerCase().includes(word)) score += 1;
+                    if (keyword.toLowerCase().includes(word)) score += 1 * blog.scale;
                 });
             });
             return { ...blog, score };

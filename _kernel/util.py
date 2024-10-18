@@ -1,6 +1,7 @@
 from colorama import init, Fore
 import re, os
 import traceback
+import numpy as np
 
 init(autoreset=True)
 
@@ -288,6 +289,81 @@ class Util:
         tocjsmap3.append("}")
         return "\n".join(toc), "\n".join(tocjsmap2+tocjsmap3), "\n".join(html)
 
+class AdaptiveScaler:
+    def __init__(self, target_min=1, target_max=10):
+        self.target_min = target_min
+        self.target_max = target_max
+        self.lower_bound = None
+        self.upper_bound = None
+        self.min_val = None
+        self.max_val = None
+        self.scale_factor = None
 
+    def fit(self, sequence):
+        """
+        Fit the scaler to the input sequence.
+        
+        :param sequence: Input sequence of numbers
+        """
+        if not sequence:
+            raise ValueError("Input sequence cannot be empty")
 
+        arr = np.array(sequence)
 
+        # Calculate Q1, Q3 and IQR
+        q1, q3 = np.percentile(arr, [25, 75])
+        iqr = q3 - q1
+
+        # Define bounds for outliers
+        self.lower_bound = q1 - 1.5 * iqr
+        self.upper_bound = q3 + 1.5 * iqr
+
+        # Clip the array to remove extreme outliers
+        arr_clipped = np.clip(arr, self.lower_bound, self.upper_bound)
+
+        # Store min and max values for scaling
+        self.min_val = arr_clipped.min()
+        self.max_val = arr_clipped.max()
+
+        # Calculate the optimal scale factor
+        raw_range = self.max_val - self.min_val
+        target_range = self.target_max - self.target_min
+        self.scale_factor = min(target_range / raw_range, 1.0)
+
+    def transform(self, value):
+        """
+        Transform a single value or a sequence of values using the fitted scaler.
+        
+        :param value: A single number or a sequence of numbers
+        :return: Scaled value(s) as integer(s)
+        """
+        if self.scale_factor is None:
+            raise ValueError("Scaler must be fitted before transform can be called")
+
+        # Handle both single value and sequence
+        is_single_value = np.isscalar(value)
+        arr = np.array([value]) if is_single_value else np.array(value)
+
+        # Clip to bounds
+        arr_clipped = np.clip(arr, self.lower_bound, self.upper_bound)
+
+        # Scale and shift
+        arr_scaled = (arr_clipped - self.min_val) * self.scale_factor + self.target_min
+
+        # Round to nearest integer
+        result = np.round(arr_scaled).astype(int)
+
+        # Ensure the results are within the target range
+        result = np.clip(result, self.target_min, self.target_max)
+
+        return int(result[0]) if is_single_value else result.tolist()
+
+    def fit_transform(self, sequence):
+        """
+        Fit the scaler to the input sequence and transform it.
+        
+        :param sequence: Input sequence of numbers
+        :return: Scaled sequence as a list of integers
+        """
+        self.fit(sequence)
+        return self.transform(sequence)

@@ -1,6 +1,6 @@
 import os, re
 from _kernel.blog import Blog
-from _kernel.util import Util
+from _kernel.util import Util, AdaptiveScaler
 
 class Engine:
 
@@ -174,6 +174,22 @@ class Engine:
     
     def _gen_search_metadata(self):
         with open("./_kernel/html-template/search_metadata.txt", 'w') as meta:
+            length = []
+            for blog in self.blogs:
+                if blog.type_ == "online":
+                    if not Util.is_none(blog.gen_file_path):
+                        blog.keywords
+                    else: continue
+                elif not Util.is_none(blog.redirect):
+                    continue
+                else:
+                    blog.keywords
+                length.append(blog.scale)
+            scaler = AdaptiveScaler(1, 5)
+            scaler.fit(length)
+
+
+
             for blog in self.blogs:
                 meta.write(f'{{')
                 meta.write(f'title: "{blog.title}",\n')
@@ -194,6 +210,7 @@ class Engine:
                 else:
                     meta.write(f'url: "{{AUTOGEN:RELATIVE_PATH_TO_GEN_FILE_PATH}}/{blog.pri_category}/{os.path.basename(blog.gen_file_path)}",\n')
                     meta.write(f'keywords: [{blog.keywords}],\n')
+                meta.write(f'scale: {6 - scaler.transform(blog.scale)},\n')
                 meta.write(f'}},\n')
 
 
