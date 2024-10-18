@@ -1,4 +1,4 @@
-import os, re
+import os, re, shutil
 from _kernel.blog import Blog
 from _kernel.util import Util, AdaptiveScaler
 
@@ -20,6 +20,7 @@ class Engine:
         self.blogs : list[Blog] = []
 
     def start(self):
+        self._clean()
         self._quick_fix()
 
         self._gen_home_page()
@@ -435,6 +436,10 @@ class Engine:
                 new_content += '\t</ul>\n</section>\n'
         return new_content
     
+    def _clean(self):
+        if os.path.exists(self.BLOGWEB):
+            shutil.rmtree(self.BLOGWEB)
+        os.makedirs(self.BLOGWEB)
     def _quick_fix(self):
         blognote = os.path.join(self.BLOGWEB, '_/')
         if not os.path.exists(blognote):
