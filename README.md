@@ -58,7 +58,8 @@
    Sub-categories will be used to generate links in the blog index page.
 2. Reprint support: You can reprint articles, and include your own notes alongside them. 
 3. Support search `command + K`, search engine will calculate the relevance scores for all blogs, and you can easily adjust the threshold to en/disable some of them.
-   - scale the score of content according to file size
+   - Scale the content score based on the file size.
+   - Use 'name' to enforce that the target content must include the specified name.
 4. Support link `[name](link)`, link must match http(s)://*
 
 ### usage
@@ -68,9 +69,8 @@ python run.py
 ```
 ### TODO & Notice
 
-1. [  %]blog_history is not support now
-2. [  %]auto clean generated file
-3. [ %%]Implement the search to be sensitive to the order of input terms, and make this sensitivity configurable
-4. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
-5. [  %]rewrite the format modified markdown to source
-6. [ %%]support ordered list
+1. [__%]blog_history is not support now
+2. [__%]auto clean generated file
+3. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
+4. [__%]rewrite the format modified markdown to source
+5. [_%%]support ordered list

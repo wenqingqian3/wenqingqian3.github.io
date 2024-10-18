@@ -14,10 +14,10 @@ function updateMediaQuery() {
 
 // 监听窗口大小变化
 window.addEventListener('resize', updateMediaQuery);
-const addButton = document.getElementById('adjustWidth-add');
-const subButton = document.getElementById('adjustWidth-sub');
-addButton.addEventListener('click', () => {
-updateMediaQuery();
+    const addButton = document.getElementById('adjustWidth-add');
+    const subButton = document.getElementById('adjustWidth-sub');
+    addButton.addEventListener('click', () => {
+    updateMediaQuery();
 });
 
 // 按下减少宽度的按钮

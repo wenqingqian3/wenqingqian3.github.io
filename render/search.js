@@ -3,10 +3,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const searchInput = document.getElementById('searchInput');
     const recentSearches = document.querySelector('.recent-searches');
     const scoreThresholdInput = document.getElementById('scoreThreshold');
-    const scoreValueDisplay = document.getElementById('scoreValue'); // 获取显示分数的元素
-    let scoreThreshold = 10; // 默认阈值设为 100
+    const scoreValueDisplay = document.getElementById('scoreValue');
+    let scoreThreshold = 10;
 
-    // 更新滑动条上方的显示值
+    updateMediaQuery();
     scoreValueDisplay.textContent = scoreThreshold;
 
     if (!searchModal || !searchInput || !recentSearches || !scoreThresholdInput) {
@@ -40,11 +40,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     searchInput.addEventListener('input', debounce(performSearch, 300));
 
-    // 当滑动条变化时，更新阈值和显示的值
+    
     scoreThresholdInput.addEventListener('input', () => {
         scoreThreshold = parseInt(scoreThresholdInput.value);
-        scoreValueDisplay.textContent = scoreThreshold; // 更新显示的分数值
-        performSearch(); // 重新执行搜索
+        scoreValueDisplay.textContent = scoreThreshold; 
+        performSearch();
     });
 
     function performSearch() {
@@ -53,18 +53,57 @@ document.addEventListener('DOMContentLoaded', (event) => {
             recentSearches.innerHTML = 'No recent searches';
             return;
         }
+        console.log(query)
+        const ALLWords = parseQuery(query)
 
-        const queryWords = query.split(/\s+/);
+        queryWords = ALLWords.regularWords
+        mandatoryWords = ALLWords.mandatoryWords
+        console.log("qwords: ", queryWords)
+        console.log("mwords: ", mandatoryWords)
     
         const scoredResults = blogData.map(blog => {
             let score = 0;
-            queryWords.forEach(word => {
-                if (blog.title.toLowerCase().includes(word)) score += 20;
-                if (blog.category.toLowerCase().includes(word)) score += 10;
-                blog.keywords.forEach(keyword => {
-                    if (keyword.toLowerCase().includes(word)) score += 1 * blog.scale;
+            if (queryWords && Array.isArray(queryWords)){
+                queryWords.forEach(word => {
+                    if (blog.title.toLowerCase().includes(word)) score += 20;
+                    if (blog.category.toLowerCase().includes(word)) score += 10;
+                    blog.keywords.forEach(keyword => {
+                        if (keyword.toLowerCase().includes(word)) score += 1 * blog.scale;
+                    });
                 });
-            });
+            }
+
+            _is_title_manda = true
+            _is_categ_manda = true
+            _is_contn_manda = true
+
+            if (mandatoryWords && Array.isArray(mandatoryWords)){
+                if(mandatoryWords.length > 0){
+                    _is_title_manda = false
+                    _is_categ_manda = false
+                    _is_contn_manda = false
+                }
+                mandatoryWords.forEach(word => {
+                    if (blog.title.toLowerCase().includes(word)) {
+                        score += 20;
+                        _is_title_manda = true
+                    }
+                    if (blog.category.toLowerCase().includes(word)){
+                        score += 10;
+                        _is_categ_manda = true
+                    }
+                    blog.keywords.forEach(keyword => {
+                        if (keyword.toLowerCase().includes(word)){
+                            score += 1 * blog.scale;
+                            _is_contn_manda = true
+                        }
+                    });
+                });
+            }
+            if (_is_categ_manda === false && _is_title_manda === false && _is_contn_manda === false){
+                score = -1
+            }
+
             return { ...blog, score };
         }).filter(blog => blog.score >= scoreThreshold)
           .sort((a, b) => b.score - a.score);
@@ -100,6 +139,59 @@ document.addEventListener('DOMContentLoaded', (event) => {
         };
     }
 
+    function parseQuery(query) {
+        const mandatoryWords = [];
+        const regularWords = [];
+        let inQuotes = false;
+        let QuotesClosed = false;
+        let currentWord = '';
+
+        for (let i = 0; i < query.length; i++) {
+            if(query[i] === ' '){
+                if(QuotesClosed === true){
+                    mandatoryWords.push(currentWord.toLowerCase());
+                    QuotesClosed = false;
+                    inQuotes = false;
+                    currentWord = '';
+                }
+                if(inQuotes){
+                    currentWord += ' ';
+                }else{
+                    if(currentWord){
+                        regularWords.push(currentWord.toLowerCase());
+                    }
+                    currentWord = '';
+                }
+            }
+            else if(query[i] === "'"){
+                if(inQuotes){
+                    QuotesClosed = true;
+                }else{
+                    QuotesClosed = false;
+                    if(currentWord === ''){
+                        inQuotes = true;
+                    }else{
+                        currentWord += "'";
+                    }
+                }
+            }
+            else{
+                if(QuotesClosed) currentWord += "'"
+                currentWord += query[i];
+                QuotesClosed = false;
+            }
+        }
+
+        if(currentWord){
+            if(QuotesClosed){
+                mandatoryWords.push(currentWord.toLowerCase());
+            }else{
+                regularWords.push(currentWord.toLowerCase());
+            }
+        }
+
+        return { mandatoryWords, regularWords };
+    }
     console.log('Advanced search modal script loaded');
 });
 
