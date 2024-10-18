@@ -31,3 +31,12 @@ li.blog_list {
 	line-height: 1.4; 
 	font-family: monospace;
 }
+
+blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 16px;
+    margin-left: 0;
+    color: var(--basic-reference-white);
+    background-color: var(--basic-white);
+    font-family: monospace;
+}

@@ -19,3 +19,10 @@ h1, h2, h3 {
 	font-weight: normal;
 	font-family: "Marcellus SC", sans-serif;
 }
+blockquote {
+    border-left: 4px solid #ccc;
+    padding-left: 16px;
+    margin-left: 0;
+    color: var(--basic-reference-white);
+    background-color: var(--basic-white);
+}

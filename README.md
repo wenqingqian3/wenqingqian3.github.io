@@ -51,6 +51,8 @@
 2. `-` List
 3. `![size1,size2...](link1,link2...)(description(Optional))` Multiple images in one line, where `size` represents the percentage of the image’s display width in a line
 4. `$eq$` Inline formula, `$$eq$$` Block formula (support multi-line), \`code\` Inline code
+5. Support link `[name](link)`, link must match http(s)://*
+6. Support reference `> content`
 
 ### Features
 1. Multi-category support: `category: cate1 cate2` 
@@ -60,7 +62,6 @@
 3. Support search `command + K`, search engine will calculate the relevance scores for all blogs, and you can easily adjust the threshold to en/disable some of them.
    - Scale the content score based on the file size.
    - Use 'name' to enforce that the target content must include the specified name.
-4. Support link `[name](link)`, link must match http(s)://*
 
 ### usage
 ```shell
@@ -69,8 +70,10 @@ python run.py
 ```
 ### TODO & Notice
 
-1. [__%]blog_history is not support now
-2. [__%]auto clean generated file
-3. [%%%]Minor (new type): Open an embedded window to display a Minor article within the current page.
-4. [__%]rewrite the format modified markdown to source
-5. [_%%]support ordered list
+```
+1. [  %]blog_history is not support now
+2. [  %]auto clean generated file
+4. [  %]rewrite the format modified markdown to source
+5. [ %%]support ordered list
+
+```

@@ -78,6 +78,7 @@ class Util:
         in_list = False
         in_metadata = False
         skip_metadata = False
+        in_blockquote = False
         math_block = []
         list_item_regex = re.compile(r"^(\s*)-\s+(.*)")
         indent_regex = re.compile(r"^(\s*)(.*)")
@@ -107,7 +108,10 @@ class Util:
 
         for line in lines:
             emptyline = re.sub(r"^\s+|\s+$", "", line)
-            if not emptyline:
+            if not emptyline:                 
+                if in_blockquote:
+                    section.append("</blockquote>")
+                    in_blockquote = False
                 continue
 
             if emptyline == "---":
@@ -136,9 +140,31 @@ class Util:
                     if item.startswith("!@#$"):
                         section.append(f"<p style=\"margin-bottom: 0em;color:#adafb1\">{item[4:]}</p>")
                     else:
-                        section.append(f"<p style=\"margin-bottom: 0em;\">{item}</p>")
+                        if item.startswith(">"):
+                            if len(item) > 2:
+                                if in_blockquote:
+                                    quote = item[2:].strip()
+                                    if quote != "":
+                                        section.append(f" {quote}")
+                                    else:
+                                        section.append("<p></p>")
+                                else:
+                                    section.append(f"<blockquote>{item[2:]}")
+                                    in_blockquote = True
+                            else:
+                                if in_blockquote:
+                                    section.append("<p></p>")
+                            continue
+                        else:
+                            if in_blockquote:
+                                section.append("</blockquote>")
+                                in_blockquote = False
+                            section.append(f"<p style=\"margin-bottom: 0em;\">{item}</p>")
                     continue
                 else:
+                    if in_blockquote:
+                        section.append("</blockquote>")
+                        in_blockquote = False
                     for i in range(100):
                         while indent_count[i] != 0:
                             section.append("</ul>")
@@ -226,6 +252,10 @@ class Util:
                 indent = match.group(1)
                 list_item = match.group(2)
                 current_indent_level = len(indent)
+                
+                if in_blockquote:
+                    section.append("</blockquote>")
+                    in_blockquote = False
 
                 if current_indent_level > last_indent_level:
                     indent_count[current_indent_level] += 1
@@ -243,17 +273,45 @@ class Util:
 
             else:
                 if line:
+                    item = line.strip()
+                    if item.startswith(">"):
+                        if len(item) > 2:
+                            if in_blockquote:
+                                quote = item[2:].strip()
+                                if quote != "":
+                                    section.append(f" {quote}")
+                                else:
+                                    section.append("<p></p>")
+                            else:
+                                section.append(f"<blockquote>{item[2:]}")
+                                in_blockquote = True
+                        else:
+                            if in_blockquote:
+                                section.append("<p></p>")
+                        continue
+                    else:
+                        if in_blockquote:
+                            section.append("</blockquote>")
+                            in_blockquote = False
                     processed_line = line
                     processed_line = general_sub(processed_line)
                     section.append(f"<p>{processed_line}</p>")
+                else:
+                    Util.print_error("empty line")
 
         if in_list:
+            if in_blockquote:
+                section.append("</blockquote>")
+                in_blockquote = False
             for i in range(100):
                 while indent_count[i] != 0:
                     section.append("</ul>")
                     indent_count[i] -= 1
 
         if in_section:
+            if in_blockquote:
+                section.append("</blockquote>")
+                in_blockquote = False
             section.append("</section>")
             html.append("\n".join(section))
 
