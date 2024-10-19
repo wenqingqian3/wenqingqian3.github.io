@@ -64,7 +64,7 @@ class Util:
         return a == "none" or a is None or a.strip() == ""
     @staticmethod
     def replace_chinese_punctuation(text):
-        text = text.replace('，', ', ').replace('。', '. ').replace('：', ': ')
+        text = text.replace('，', ', ').replace('。', '. ').replace('：', ': ').replace('；', '; ')
         return text
     @staticmethod
     def markdown_to_html(markdown, args):
