@@ -19,6 +19,7 @@
 	<link href="../../../render/sidebar.css" rel="stylesheet">
 	<link href="../../../render/toc.css" rel="stylesheet">
 	<link href="../../../render/common.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
@@ -74,6 +75,8 @@
 <li><a class="toch1" href="#List">List</a>
 </li>
 <li><a class="toch1" href="#Blockquote">Blockquote</a>
+</li>
+<li><a class="toch1" href="#code block">code block</a>
 </li>
 </ul>
 </nav></aside><main>
@@ -146,6 +149,37 @@
  Line 2
 </blockquote>
 </section>
+<section>
+<h1 id="code block">code block</h1>
+<pre><code class="language-cpp">
+int main(){
+    int x = 0; // z
+    string s = "sd";
+}
+</code></pre>
+<pre><code class="language-python">
+def fn():
+    return 1
+</code></pre>
+<pre><code class="language-txt">
+overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow 
+</code></pre>
+<ul>
+<li class="blog_list">list</li>
+<pre><code class="language-txt">
+margin left, but no left margin in this inlist block
+</code></pre>
+<li class="blog_list">list</li>
+<p style="margin-bottom: 0em;">.....</p>
+<pre><code class="language-txt">
+.....
+</code></pre>
+<p style="margin-bottom: 0em;">nested</p>
+<pre><code class="language-">
+</code></pre>
+<p style="margin-bottom: 0em;">.....</p>
+</ul>
+</section>
 
 	
 <div class="settings-menu">
@@ -177,7 +211,7 @@ date: "2024-4-5",
 type: "html",
 category: "cate1 multi_cate",
 url: "../cate1/basic.html",
-keywords: ["Image", "end", "end", "end", "end", "end", "end", "description", "Formula", "Inline", "Formula", "The", "sum", "numbers", "Block", "Formula", "Single", "Line", "Multi", "Line", "^", "^", "^", "Code", "Inline", "snippet", "List", "First", "item", "Nested", "item", "Deeper", "item", "Deepest", "item", "Another", "nested", "item", "E", "mc", "^", "This", "inline", "formula", "^", "Blockquote", "reference", "inside", "list", "Link", "GitHub", "https", "github", "Blockquote", "This", "single", "line", "blockquote", "This", "blockquote", "Multiple", "lines", "blockquote", "Line", "Line"],
+keywords: ["Image", "end", "end", "end", "end", "end", "end", "description", "Formula", "Inline", "Formula", "The", "sum", "numbers", "Block", "Formula", "Single", "Line", "Multi", "Line", "^", "^", "^", "Code", "Inline", "snippet", "List", "First", "item", "Nested", "item", "Deeper", "item", "Deepest", "item", "Another", "nested", "item", "E", "mc", "^", "This", "inline", "formula", "^", "Blockquote", "reference", "inside", "list", "Link", "GitHub", "https", "github", "Blockquote", "This", "single", "line", "blockquote", "This", "blockquote", "Multiple", "lines", "blockquote", "Line", "Line", "block", "cpp", "int", "main", "int", "string", "sd", "python", "def", "fn", "return", "txt", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "overflow", "list", "txt", "margin", "left", "left", "margin", "inlist", "block", "list", ".....", "txt", ".....", "txt", "nested", "....."],
 scale: 1,
 },
 {title: "language test",
@@ -222,6 +256,7 @@ scale: 5,
 <script src="../../../render/common.js"></script> 
 <script src="../../../render/toc.js"></script> 
 <script src="../../../render/search.js"></script> 
-
+<script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
 </body>
 </html>

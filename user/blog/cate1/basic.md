@@ -59,3 +59,30 @@ Inline `code snippet` example.
 > 
 > Line 2
 
+# code block
+
+```cpp
+int main(){
+    int x = 0; // z
+    string s = "sd";
+}
+```
+```python
+def fn():
+    return 1
+```
+```txt
+overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow overflow 
+```
+- list
+  ```txt
+  margin left, but no left margin in this inlist block
+  ```
+
+- list
+  .....
+  ```txt
+  .....
+  ```
+  .....
+

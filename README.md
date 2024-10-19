@@ -53,6 +53,7 @@
 4. `$eq$` Inline formula, `$$eq$$` Block formula (support multi-line), \`code\` Inline code
 5. Support link `[name](link)`, link must match http(s)://*
 6. Support reference `> content`
+7. Support code block ```language , dont support nested yet
 
 ### Features
 1. Multi-category support: `category: cate1 cate2` 
@@ -72,7 +73,6 @@ python run.py
 
 ```txt
 [  %]blog_history is not support now
-[%%%]auto clean generated file 
 [  %]rewrite the format modified markdown to source
 [ %%]support ordered list (hard)
 

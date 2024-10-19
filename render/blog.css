@@ -27,3 +27,15 @@ h3 {
 	color: var(--basic-h3toc-color);
 	font-size: 1.3em;
 }
+
+pre[class*="language-"] {
+    background-color: #555 !important;
+    padding: 15px;
+    border-radius: 5px;
+    overflow-x: auto;
+}
+
+code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 14px;
+}

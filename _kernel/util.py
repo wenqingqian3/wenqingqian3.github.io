@@ -37,8 +37,9 @@ class Util:
     def print_warning(message):
         print(Fore.YELLOW + "[WARNING] " + message)
     @staticmethod
-    def print_error(message):
-        print(Fore.RED + "[ERROR] " + message)
+    def print_error(message, level = 0):
+        tb = traceback.extract_stack()[-level-1]
+        print(Fore.RED + "[ERROR] " + message + f" :: {tb.filename}, {tb.lineno}")
     @staticmethod
     def print_info(message):
         print(Fore.GREEN + "[INFO] " + message)
@@ -79,6 +80,7 @@ class Util:
         in_metadata = False
         skip_metadata = False
         in_blockquote = False
+        in_codeblock  = False
         math_block = []
         list_item_regex = re.compile(r"^(\s*)-\s+(.*)")
         indent_regex = re.compile(r"^(\s*)(.*)")
@@ -95,8 +97,7 @@ class Util:
         def general_sub(item, **kargs):
             for key in kargs:
                 if key not in _general_pattern:
-                    stack = traceback.extract_stack()[-2]
-                    Util.print_error(f"invaild name {key} for disable the genernal_pattern :: {stack.filename}-{stack.lineno}")
+                    Util.print_error(f"invaild name {key} for disable the genernal_pattern", 1)
             for key, (pattern, replacement) in _general_pattern.items():
                 if kargs.get(key) is False:
                     continue
@@ -107,8 +108,28 @@ class Util:
         lines = markdown.split('\n')
 
         for line in lines:
+            if re.match(r"^\s*```.*$", line):
+                if in_codeblock:
+                    section.append("</code></pre>")
+                    in_codeblock = False
+                else:
+                    if in_blockquote:
+                        section.append("</blockquote>")
+                        in_blockquote = False
+                    language = re.search(r"^\s*```(.*)$", line).group(1).strip()
+                    section.append(f'<pre><code class="language-{language}">')
+                    in_codeblock = True
+                continue
+            elif in_codeblock:
+                if in_list and last_indent_level >=0:
+                    num_space = (last_indent_level + 2)
+                    if line.startswith(" " * num_space):
+                        line = line[num_space:]
+                section.append(line)
+                continue
+
             emptyline = re.sub(r"^\s+|\s+$", "", line)
-            if not emptyline:                 
+            if not emptyline:
                 if in_blockquote:
                     section.append("</blockquote>")
                     in_blockquote = False
@@ -127,6 +148,8 @@ class Util:
                 continue
 
             line = line.rstrip()
+
+
 
             match = list_item_regex.search(line)
 
@@ -171,6 +194,7 @@ class Util:
                             indent_count[i] -= 1
                     in_list = False
                     last_indent_level = -1
+
 
             if not re.match(r"^\$\$$", line) and in_math_block:
                 math_block.append(line)
