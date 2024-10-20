@@ -73,7 +73,7 @@ python run.py
 
 ```txt
 [  %]blog_history is not support now
-[  %]rewrite the format modified markdown to source
+[%%%]rewrite the format modified markdown to source (as a option)
 [ %%]support ordered list (hard)
-
+[%%%]click to enlarge the pic
 ```
