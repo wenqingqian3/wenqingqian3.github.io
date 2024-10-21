@@ -168,11 +168,14 @@ class Util:
                                 if in_blockquote:
                                     quote = item[2:].strip()
                                     if quote != "":
+                                        quote = general_sub(quote)
                                         section.append(f" {quote}")
                                     else:
                                         section.append("<p></p>")
                                 else:
-                                    section.append(f"<blockquote>{item[2:]}")
+                                    quote = item[2:].strip()
+                                    quote = general_sub(quote)
+                                    section.append(f"<blockquote>{quote}")
                                     in_blockquote = True
                             else:
                                 if in_blockquote:
@@ -303,11 +306,14 @@ class Util:
                             if in_blockquote:
                                 quote = item[2:].strip()
                                 if quote != "":
+                                    quote = general_sub(quote)
                                     section.append(f" {quote}")
                                 else:
                                     section.append("<p></p>")
                             else:
-                                section.append(f"<blockquote>{item[2:]}")
+                                quote = item[2:].strip()
+                                quote = general_sub(quote)
+                                section.append(f"<blockquote>{quote}")
                                 in_blockquote = True
                         else:
                             if in_blockquote:
