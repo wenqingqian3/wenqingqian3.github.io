@@ -76,4 +76,5 @@ python run.py
 [%%%]rewrite the format modified markdown to source (as a option)
 [ %%]support ordered list (hard)
 [%%%]click to enlarge the pic
+[ %%]support list in reference (markdown trans)
 ```
