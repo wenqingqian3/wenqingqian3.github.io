@@ -66,6 +66,7 @@ class Util:
     def replace_chinese_punctuation(text):
         text = text.replace('，', ', ').replace('。', '. ').replace('：', ': ').replace('；', '; ')
         return text
+
     @staticmethod
     def markdown_to_html(markdown, args):
         markdown = Util.replace_chinese_punctuation(markdown)
@@ -86,6 +87,18 @@ class Util:
         indent_regex = re.compile(r"^(\s*)(.*)")
         last_indent_level = -1
         indent_count = [0] * 100
+
+        _html_raw_string = {
+            "&": "&amp;", # must do this first...
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        }
+        def _html_raw_string_replace(strs: str):
+            for k, v in _html_raw_string.items():
+                strs = strs.replace(k, v)
+            return strs
 
         _general_pattern = {
             "code": [r"`(.*?)`", r"<code>\1</code>"],
@@ -125,6 +138,8 @@ class Util:
                     num_space = (last_indent_level + 2)
                     if line.startswith(" " * num_space):
                         line = line[num_space:]
+                line = _html_raw_string_replace(line)
+                print("line: ", line)
                 section.append(line)
                 continue
 

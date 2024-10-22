@@ -77,4 +77,6 @@ python run.py
 [ %%]support ordered list (hard)
 [%%%]click to enlarge the pic
 [ %%]support list in reference (markdown trans)
+[  %]count
+[  %]support * ** *** (markdown trans) (general sub)
 ```
