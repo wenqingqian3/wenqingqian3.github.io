@@ -139,7 +139,6 @@ class Util:
                     if line.startswith(" " * num_space):
                         line = line[num_space:]
                 line = _html_raw_string_replace(line)
-                print("line: ", line)
                 section.append(line)
                 continue
 
@@ -276,7 +275,7 @@ class Util:
                     if not is_number(sizev[0]):
                         Util.print_warning(f"img size '{sizev[0]}' invalid, default to 50%")
                         sizev[0] = "50"
-                    section.append(f"<p></p><img src=\"{args['pic_path']}/{linkv[0]}\" style=\"display: block; margin: 0 auto;width: {sizev[0]}%;\" alt=\"err! email me if you need\"><p></p>")
+                    section.append(f"<p></p><img src=\"{args['pic_path']}/{linkv[0]}\" style=\"display: block; margin: 0 auto;width: {sizev[0]}%;\" alt=\"err! email me if you need\" data-zoomable><p></p>")
                     if desc:
                         section.append(f"<figure><figcaption>{desc}</figcaption></figure>")
                 else:
@@ -286,7 +285,7 @@ class Util:
                         if not is_number(size):
                             Util.print_error(f"Invalid image size '{sizev[i]}', default to 30%")
                             size = "30"
-                        section.append(f"<img src=\"{args['pic_path']}/{linkv[i]}\" style=\"width: {size}%; margin-left: {margin_left}%;\" alt=\"err! email me if you need\">")
+                        section.append(f"<img src=\"{args['pic_path']}/{linkv[i]}\" style=\"width: {size}%; margin-left: {margin_left}%;\" alt=\"err! email me if you need\" data-zoomable>")
                     section.append("<p></p>")
                     if desc:
                         section.append(f"<figure><figcaption>{desc}</figcaption></figure>")

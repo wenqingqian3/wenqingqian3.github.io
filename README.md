@@ -63,7 +63,8 @@
 3. Support search `command + K`, search engine will calculate the relevance scores for all blogs, and you can easily adjust the threshold to en/disable some of them.
    - Scale the content score based on the file size.
    - Use 'name' to enforce that the target content must include the specified name.
-
+4. Click to enlarge img
+   
 ### usage
 ```shell
 # minimal-page/
@@ -75,7 +76,6 @@ python run.py
 [  %]blog_history is not support now
 [%%%]rewrite the format modified markdown to source (as a option)
 [ %%]support ordered list (hard)
-[%%%]click to enlarge the pic
 [ %%]support list in reference (markdown trans)
 [  %]count
 [  %]support * ** *** (markdown trans) (general sub)

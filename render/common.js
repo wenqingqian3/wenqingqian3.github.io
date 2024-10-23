@@ -98,3 +98,11 @@ function adjustMaxWidthSub() {
 
 document.getElementById('adjustWidth-add').onclick = adjustMaxWidthAdd;
 document.getElementById('adjustWidth-sub').onclick = adjustMaxWidthSub;
+
+
+// img
+mediumZoom('[data-zoomable]', {
+    margin: 24,
+    background: 'rgba(0,0,0,0.9)',
+    scrollOffset: 0,
+});
