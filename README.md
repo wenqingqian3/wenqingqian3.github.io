@@ -76,7 +76,8 @@ python run.py
 ```txt
 [  %]blog_history is not support now
 [ %%]support ordered list (hard)
-[ %%]support list in reference (markdown trans)
+[ %%]support list in reference (hard) (markdown trans)
 [  %]count
 [  %]support * ** *** (markdown trans) (general sub)
+[%%%]add download button at buttom of the page
 ```
