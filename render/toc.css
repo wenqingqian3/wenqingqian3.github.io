@@ -30,6 +30,7 @@ main {
 .toc-sidebar ul {
 	list-style-type: none;
 	padding-left: 0;
+    font-size: smaller;
 }
 
 .toc-sidebar ul ul{
