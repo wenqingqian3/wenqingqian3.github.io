@@ -280,7 +280,7 @@ class Engine:
 
             BLOG_TOC,\
             BLOG_TOC_MAP,\
-            BLOG_CONTENT  = blog.generate()
+            BLOG_CONTENT  = blog.generate(is_rewrite=self.config['ADVANCED']['REWRITE'])
 
             replacements_set = {
                 'BLOG_LANGUAGE' : blog.language if not Util.is_none(blog.language) else "chinese",

@@ -61,6 +61,10 @@ INDEX.description = "This page and the following HTML-type web pages are all bui
 
 PATH = './webroot/assets/other.html'
 
+[ADVANCED]
+# Whether to rewrite the content of markdown file after auto syntax modifying
+REWRITE = true
+
 [COMPILE]
 # Toggle debug mode
 DEBUG = false

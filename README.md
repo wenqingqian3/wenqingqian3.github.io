@@ -64,7 +64,8 @@
    - Scale the content score based on the file size.
    - Use 'name' to enforce that the target content must include the specified name.
 4. Click to enlarge img
-   
+5. Support rewrite the format modified markdown to source (as a option in toml)
+
 ### usage
 ```shell
 # minimal-page/
@@ -74,7 +75,6 @@ python run.py
 
 ```txt
 [  %]blog_history is not support now
-[%%%]rewrite the format modified markdown to source (as a option)
 [ %%]support ordered list (hard)
 [ %%]support list in reference (markdown trans)
 [  %]count

@@ -390,6 +390,9 @@ class Util:
         tocjsmap2.append("}")
         tocjsmap3.append("}")
         return "\n".join(toc), "\n".join(tocjsmap2+tocjsmap3), "\n".join(html)
+    def markdown_to_html_and_rewrite(markdown, args):
+        markdown = Util.replace_chinese_punctuation(markdown)
+        return markdown, Util.markdown_to_html(markdown, args)
 
 class AdaptiveScaler:
     def __init__(self, target_min=1, target_max=10):

@@ -25,12 +25,18 @@ class Blog:
         self._keywords = None
         self.scale   = 1
 
-    def generate(self):
+    def generate(self, is_rewrite=False):
         with open(self.target_file_path, 'r') as f:
             content = f.read()
-            return Util.markdown_to_html(content, 
-                    {'pic_path': Util.calculate_relative_path(self.gen_file_path, os.path.dirname(self.target_file_path))})
-        return
+        
+        if is_rewrite:
+            ncontent, ret = Util.markdown_to_html_and_rewrite(content, 
+                    {'pic_path': Util.calculate_relative_path(self.gen_file_path, 
+                    os.path.dirname(self.target_file_path))})
+            with open(self.target_file_path, 'w') as f:
+                f.write(ncontent)
+            return ret
+        return Util.markdown_to_html(content, {'pic_path': Util.calculate_relative_path(self.gen_file_path, os.path.dirname(self.target_file_path))})
 
     @property
     def keywords(self):
