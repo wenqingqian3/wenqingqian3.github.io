@@ -301,6 +301,9 @@ scale: 5,
             for (let styleSheet of styleSheets) {
                 try {
                     if (styleSheet.href) {
+                        if(styleSheet.href.includes('http'))
+                            continue
+                        console.log('css loc: ['+styleSheet.href+']')
                         const response = await fetch(styleSheet.href);
                         const cssText = await response.text();
                         // 替换外链CSS为内联CSS
@@ -308,6 +311,7 @@ scale: 5,
                             `<link rel="stylesheet" href="${styleSheet.href}">`,
                             `<style>${cssText}</style>`
                         );
+                        
                     }
                 } catch (error) {
                     console.error('Error processing stylesheet:', error, styleSheet.href);
@@ -325,6 +329,7 @@ scale: 5,
                     if (script.src) {
                         if(script.src.includes('http'))
                             continue
+                        console.log('js loc: ['+script.src+']')
                         const response = await fetch(script.src);
                         const jsText = await response.text();
                         // 替换外链JS为内联JS - 将标签分开写，避免被解释为结束符
@@ -333,6 +338,7 @@ scale: 5,
                             `<script src="${script.src}">${closingScriptTag}>`,
                             `<script>${jsText}${closingScriptTag}>`
                         );
+                        
                     }
                 } catch (error) {
                     console.error('Error processing script:', error, script.src);
