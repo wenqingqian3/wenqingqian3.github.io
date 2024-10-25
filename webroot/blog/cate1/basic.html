@@ -7,20 +7,35 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Blog</title>
 	<link rel="icon" href="../../../render/icon/appletree.png" type="image/png">
-	<link href="../../../render/fonts.css" rel="stylesheet">
-	<link href="../../../render/search.css" rel="stylesheet">
-	<link href="../../../render/style_base.css" rel="stylesheet">
-	<link href="../../../render/blog.css" rel="stylesheet">
-	<link href="../../../render/style_english.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../render/fonts.css">
+	<link rel="stylesheet" href="../../../render/search.css">
+	<link rel="stylesheet" href="../../../render/style_base.css">
+	<link rel="stylesheet" href="../../../render/blog.css">
+	<link rel="stylesheet" href="../../../render/style_english.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-	<link href="../../../render/sidebar.css" rel="stylesheet">
-	<link href="../../../render/toc.css" rel="stylesheet">
-	<link href="../../../render/common.css" rel="stylesheet">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../../../render/sidebar.css">
+	<link rel="stylesheet" href="../../../render/toc.css">
+	<link rel="stylesheet" href="../../../render/common.css">
     <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
 	<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* 这里放你的CSS代码 */
+        .download-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
 
@@ -189,6 +204,9 @@ margin left, but no left margin in this inlist block
 <p></p>
  formula in reference \( a + b = c\) .
 </blockquote>
+
+    <button class="download-btn" onclick="downloadPage()">下载页面</button>
+
 </section>
 
 	
@@ -269,5 +287,79 @@ scale: 5,
 <script src="../../../render/search.js"></script> 
 <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+
+<script>
+    function downloadPage() {
+        // 获取当前页面的HTML内容
+        let htmlContent = document.documentElement.outerHTML;
+        
+        // 获取所有外部样式表
+        const styleSheets = Array.from(document.styleSheets);
+        
+        // 处理外部样式表
+        const processStyleSheets = async () => {
+            for (let styleSheet of styleSheets) {
+                try {
+                    if (styleSheet.href) {
+                        const response = await fetch(styleSheet.href);
+                        const cssText = await response.text();
+                        // 替换外链CSS为内联CSS
+                        htmlContent = htmlContent.replace(
+                            `<link rel="stylesheet" href="${styleSheet.href}">`,
+                            `<style>${cssText}</style>`
+                        );
+                    }
+                } catch (error) {
+                    console.error('Error processing stylesheet:', error, styleSheet.href);
+                }
+            }
+        };
+
+        // 获取所有脚本
+        const scripts = Array.from(document.getElementsByTagName('script'));
+        
+        // 处理外部脚本
+        const processScripts = async () => {
+            for (let script of scripts) {
+                try {
+                    if (script.src) {
+                        if(script.src.includes('http'))
+                            continue
+                        const response = await fetch(script.src);
+                        const jsText = await response.text();
+                        // 替换外链JS为内联JS - 将标签分开写，避免被解释为结束符
+                        const closingScriptTag = "</"+"script";  // 分开写结束标签
+                        htmlContent = htmlContent.replace(
+                            `<script src="${script.src}">${closingScriptTag}>`,
+                            `<script>${jsText}${closingScriptTag}>`
+                        );
+                    }
+                } catch (error) {
+                    console.error('Error processing script:', error, script.src);
+                }
+            }
+        };
+
+        // 执行处理并下载
+        const processAndDownload = async () => {
+            await processStyleSheets();
+            await processScripts();
+
+            // 创建下载链接
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'page.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        };
+
+        processAndDownload();
+    }
+</script>
+
 </body>
 </html>
