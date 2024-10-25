@@ -80,4 +80,5 @@ python run.py
 [  %]count
 [  %]support * ** *** (markdown trans) (general sub)
 [%%%]add download button at buttom of the page
+[%%%]dont load all search metadata to every page
 ```
