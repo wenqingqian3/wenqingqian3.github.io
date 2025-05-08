@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script type="module" src="https://cdn.jsdelivr.net/gh/pytorch/pytorch@main/torch/utils/viz/MemoryViz.js"></script>
+<script>
+// DeepSeek 
+// Wait for page load
+window.addEventListener('load', function() {
+    // Create control panel container
+    const panelContainer = document.createElement('div');
+    Object.assign(panelContainer.style, {
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        zIndex: '9999',
+        fontFamily: "'Segoe UI', Roboto, sans-serif"
+    });
+    
+    // Create collapse/expand button
+    const toggleBtn = document.createElement('button');
+    Object.assign(toggleBtn, {
+        textContent: '>',
+        title: 'Collapse/Expand'
+    });
+    Object.assign(toggleBtn.style, {
+        position: 'absolute',
+        right: '1px',
+        top: '8px',
+        width: '4px',
+        height: '4px',
+        border: 'none',
+        borderRadius: '50%',
+        color: 'gray',
+        cursor: 'pointer',
+        zIndex: '10000',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontSize: '16px'
+    });
+
+    // Create control panel
+    const panel = document.createElement('div');
+    Object.assign(panel.style, {
+        position: 'fixed',
+        top: '10px',
+        right: '10px',
+        zIndex: '9999',
+        backgroundColor: '#f8f9fa',
+        padding: '12px',
+        border: '1px solid #dee2e6',
+        borderRadius: '8px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+        fontFamily: "'Segoe UI', Roboto, sans-serif",
+        width: '280px'
+    });
+    
+    // Search input
+    const searchInput = document.createElement('input');
+    Object.assign(searchInput, {
+        type: 'text',
+        placeholder: 'Search text (press Enter)'
+    });
+    Object.assign(searchInput.style, {
+        width: '95%',
+        padding: '6px 6px',
+        marginBottom: '10px',
+        border: '1px solid #ced4da',
+        borderRadius: '4px',
+        fontSize: '14px',
+        height: '28px'
+    });
+    
+    // Control buttons container
+    const controls = document.createElement('div');
+    Object.assign(controls.style, {
+        display: 'flex',
+        gap: '8px',
+        marginBottom: '12px'
+    });
+    
+    // Action buttons
+    const actionBtn = document.createElement('button');
+    actionBtn.textContent = 'Start Search';
+    
+    const speedSelect = document.createElement('select');
+    [['Slow', 100], ['Medium', 10], ['Fast', 5], ['Turbo', 1]].forEach(([text, value]) => {
+        const option = document.createElement('option');
+        option.value = value;
+        option.textContent = text;
+        speedSelect.appendChild(option);
+    });
+    speedSelect.value = 100;
+    
+    const resetBtn = document.createElement('button');
+    resetBtn.textContent = 'Reset';
+    resetBtn.onclick = () => location.reload();
+    
+    // Style buttons consistently
+    [actionBtn, resetBtn, speedSelect].forEach(el => {
+        Object.assign(el.style, {
+            flex: '1',
+            padding: '3px 6px',
+            border: '1px solid #007bff',
+            borderRadius: '4px',
+            backgroundColor: '#fff',
+            color: '#007bff',
+            cursor: 'pointer',
+            fontSize: '13px',
+            height: '28px'
+        });
+    });
+    
+    controls.appendChild(actionBtn);
+    controls.appendChild(speedSelect);
+    controls.appendChild(resetBtn);
+    
+    // Stats display
+    const stats = document.createElement('div');
+    Object.assign(stats.style, {
+        marginBottom: '10px',
+        fontSize: '12px',
+        color: '#6c757d',
+        lineHeight: '1.4'
+    });
+    
+    // Results display
+    const results = document.createElement('div');
+    Object.assign(results.style, {
+        fontSize: '13px',
+        whiteSpace: 'pre',
+        backgroundColor: '#f1f3f5',
+        padding: '8px',
+        borderRadius: '4px',
+        maxHeight: '150px',
+        overflowY: 'auto'
+    });
+    
+    panel.appendChild(searchInput);
+    panel.appendChild(controls);
+    panel.appendChild(stats);
+    panel.appendChild(results);
+    panelContainer.appendChild(toggleBtn);
+    panelContainer.appendChild(panel);
+    document.body.appendChild(panelContainer);
+
+    // Collapse/expand functionality
+    let isCollapsed = false;
+    toggleBtn.addEventListener('click', () => {
+        isCollapsed = !isCollapsed;
+        if (isCollapsed) {
+            Object.assign(panel.style, {
+                width: '0',
+                height: '0',
+                padding: '0',
+                opacity: '0',
+                border: 'none'
+            });
+            toggleBtn.textContent = '<';
+        } else {
+            Object.assign(panel.style, {
+                width: '280px',
+                height: 'auto',
+                padding: '12px',
+                opacity: '1',
+                border: '1px solid #dee2e6'
+            });
+            toggleBtn.textContent = '>';
+        }
+    });
+
+    // Format MB values
+    function formatMB(mb) {
+        if (mb < 1000) return mb.toFixed(2) + ' MB';
+        return (mb / 1024).toFixed(2) + ' GB';
+    }
+    
+    // Search state
+    let isRunning = false;
+    let polygons = [];
+    let currentIdx = 0;
+    let totalMB = 0;
+    let matches = 0;
+    let startTime = null;
+    let lastUpdateTime = null;
+    let processedInLastPeriod = 0;
+    let averageSpeed = 0;
+    let speedMeasurements = [];
+    let timeoutId = null;
+    
+    // Update statistics with stabilized speed calculation
+    function updateStats() {
+        const now = Date.now();
+        const elapsed = (now - startTime) / 1000;
+        
+        // Calculate speed based on last 10 items to get more stable measurement
+        if (speedMeasurements.length >= 10) {
+            const recentTime = (now - speedMeasurements[0].time) / 1000;
+            const recentCount = speedMeasurements[speedMeasurements.length - 1].count - speedMeasurements[0].count;
+            averageSpeed = recentCount / recentTime;
+        } else if (speedMeasurements.length > 1) {
+            averageSpeed = currentIdx / elapsed;
+        }
+        
+        const remaining = averageSpeed > 0 ? (polygons.length - currentIdx) / averageSpeed : 0;
+        
+        stats.innerHTML = `Progress: ${currentIdx}/${polygons.length} (${Math.round(currentIdx/polygons.length*100)}%)<br>
+                          Speed: ${Math.round(averageSpeed*10)/10} items/sec<br>
+                          ETA: ${formatTime(remaining)}`;
+    }
+    
+    function formatTime(sec) {
+        if (isNaN(sec)) return 'calculating...';
+        if (sec < 60) return Math.round(sec) + 's';
+        if (sec < 3600) return Math.floor(sec/60) + 'm ' + Math.round(sec%60) + 's';
+        return Math.floor(sec/3600) + 'h ' + Math.floor((sec%3600)/60) + 'm';
+    }
+    
+    // Process individual polygon
+    function processNext() {
+        if (!isRunning || currentIdx >= polygons.length) {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            results.textContent = `${isRunning ? 'Paused' : 'Completed'}!\nMatches: ${matches}\nTotal size: ${formatMB(totalMB)}`;
+            actionBtn.textContent = 'Start Search';
+            isRunning = false;
+            return;
+        }
+        
+        const polygon = polygons[currentIdx];
+        polygon.dispatchEvent(new MouseEvent('mouseover', { bubbles: true }));
+        
+        const processStartTime = Date.now();
+        timeoutId = setTimeout(() => {
+            const div = document.querySelector('div[style*="grid-column: 1"][style*="grid-row: 3"]');
+            
+            if (div) {
+                const content = div.textContent;
+                
+                if (content.includes(searchInput.value.trim())) {
+                    polygon.setAttribute('fill', '#000');
+                    matches++;
+                    const sizeMatch = content.match(/Size:\s*([\d.]+)\s*MiB/i);
+                    if (sizeMatch) {
+                        totalMB += parseFloat(sizeMatch[1]);
+                    }
+                }
+                
+                // Record processing time for speed calculation
+                speedMeasurements.push({
+                    time: processStartTime,
+                    count: currentIdx
+                });
+                
+                // Keep only last 20 measurements
+                if (speedMeasurements.length > 20) {
+                    speedMeasurements.shift();
+                }
+                
+                if (currentIdx % 5 === 0) updateStats();
+                
+                results.textContent = `Processed: ${currentIdx+1}/${polygons.length}\nMatches: ${matches}\nSize: ${formatMB(totalMB)}`;
+            }
+            
+            polygon.dispatchEvent(new MouseEvent('mouseout', { bubbles: true }));
+            currentIdx++;
+            processNext();
+        }, speedSelect.value);
+    }
+    
+    // Event listeners
+    searchInput.addEventListener('keypress', e => {
+        if (e.key === 'Enter') startSearch();
+    });
+    
+    actionBtn.addEventListener('click', () => {
+        if (isRunning) {
+            isRunning = false;
+            actionBtn.textContent = 'Resume';
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+        } else {
+            startSearch();
+        }
+    });
+    
+    function startSearch() {
+        const query = searchInput.value.trim();
+        if (!query) {
+            results.textContent = 'Please enter search text';
+            return;
+        }
+        
+        if (currentIdx === 0) {
+            polygons = document.querySelectorAll('polygon');
+            totalMB = 0;
+            matches = 0;
+            startTime = Date.now();
+            speedMeasurements = [];
+        } else if (currentIdx >= polygons.length) {
+            currentIdx = 0; // Restart if completed
+        }
+        
+        isRunning = true;
+        actionBtn.textContent = 'Pause';
+        results.textContent = 'Searching...';
+        processNext();
+    }
+    
+    // Initialize
+    updateStats();
+});
+</script>
+</body>
